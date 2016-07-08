@@ -1,5 +1,6 @@
 package edu.ucsb.nceas.rest;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -21,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import edu.ucsb.nceas.mdqengine.Aggregator;
 import edu.ucsb.nceas.mdqengine.MDQEngine;
 import edu.ucsb.nceas.mdqengine.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
@@ -128,5 +130,24 @@ public class SuitesResource {
 			return null;
 		} 
         return XmlMarshaller.toXml(run);
+    }
+    
+    @GET
+    @Path("/{id}/aggregate/{query}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public File run(
+    		@PathParam("id") String id,
+    		@PathParam("query") String query) {
+		File batchResult = null;
+		try {
+			Suite suite = store.getSuite(id);
+			Aggregator a = new Aggregator();
+			batchResult = a.runBatch(query, suite);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		} 
+        return batchResult;
     }
 }
