@@ -53,13 +53,13 @@ public class ChecksResource {
         return JsonMarshaller.toJson(checks);
     }
     
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCheckJSON(@PathParam("id") String id) {
-    	Check check = store.getCheck(id);
-        return JsonMarshaller.toJson(check);
-    }
+//    @GET
+//    @Path("/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getCheckJSON(@PathParam("id") String id) {
+//    	Check check = store.getCheck(id);
+//        return JsonMarshaller.toJson(check);
+//    }
     
     @GET
     @Path("/{id}")

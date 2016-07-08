@@ -53,13 +53,13 @@ public class RunsResource {
         return JsonMarshaller.toJson(runs);
     }
     
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getRunJSON(@PathParam("id") String id) {
-    	Run run = store.getRun(id);
-        return JsonMarshaller.toJson(run);
-    }
+//    @GET
+//    @Path("/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getRunJSON(@PathParam("id") String id) {
+//    	Run run = store.getRun(id);
+//        return JsonMarshaller.toJson(run);
+//    }
     
     @GET
     @Path("/{id}")

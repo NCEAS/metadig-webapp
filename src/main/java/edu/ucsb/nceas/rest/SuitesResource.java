@@ -58,13 +58,13 @@ public class SuitesResource {
         return JsonMarshaller.toJson(suites);
     }
     
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getSuiteJSON(@PathParam("id") String id) {
-    	Suite suite = store.getSuite(id);
-        return JsonMarshaller.toJson(suite);
-    }
+//    @GET
+//    @Path("/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getSuiteJSON(@PathParam("id") String id) {
+//    	Suite suite = store.getSuite(id);
+//        return JsonMarshaller.toJson(suite);
+//    }
     
     @GET
     @Path("/{id}")
