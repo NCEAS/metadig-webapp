@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.IOUtils;
@@ -41,7 +42,7 @@ public class SuitesResource {
 	private MDQStore store = null;
 	
 	private MDQEngine engine = null;
-	
+		
 	public SuitesResource() {
 		this.store = StoreFactory.getStore();
 		this.engine = new MDQEngine();
@@ -135,7 +136,7 @@ public class SuitesResource {
     @GET
     @Path("/{id}/aggregate/{query}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public File run(
+    public Response run(
     		@PathParam("id") String id,
     		@PathParam("query") String query) {
 		File batchResult = null;
@@ -148,6 +149,7 @@ public class SuitesResource {
 			log.error(e.getMessage(), e);
 			return null;
 		} 
-        return batchResult;
+		return Response.ok(batchResult).header("Content-Disposition", "attachment; filename=\"" + batchResult.getName() + "\"").build();
+
     }
 }
