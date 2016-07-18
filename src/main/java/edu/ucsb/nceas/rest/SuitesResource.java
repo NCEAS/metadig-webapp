@@ -136,7 +136,7 @@ public class SuitesResource {
     @GET
     @Path("/{id}/aggregate/{query}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response run(
+    public Response aggregate(
     		@PathParam("id") String id,
     		@PathParam("query") String query) {
 		File batchResult = null;
