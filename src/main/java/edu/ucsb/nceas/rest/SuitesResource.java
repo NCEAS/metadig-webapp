@@ -16,8 +16,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.IOUtils;
@@ -160,16 +163,33 @@ public class SuitesResource {
     
     @GET
     @Path("/{id}/plot/{query}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces({MediaType.APPLICATION_SVG_XML, "application/pdf", "image/png"})
     public Response plot(
     		@PathParam("id") String id,
-    		@PathParam("query") String query) {
+    		@PathParam("query") String query,
+    		@Context Request r) {
 		File result = null;
 		try {
+			
+			// determine the format of plot to return
+			String format = "pdf";
+			List<Variant> vs = 
+				    Variant.mediaTypes(MediaType.APPLICATION_SVG_XML_TYPE, MediaType.valueOf("application/pdf"), MediaType.valueOf("image/png")).build();
+			Variant v = r.selectVariant(vs);
+			if (v == null) {
+			    return Response.notAcceptable(vs).build();
+			} else {
+			    MediaType mt = v.getMediaType();
+			    format = mt.getSubtype();
+			    if (format.contains("+")) {
+			    	format = format.substring(0, format.indexOf("+"));
+			    }
+			}
+			
 			Suite suite = store.getSuite(id);
 			Aggregator a = new Aggregator();
 			List<NameValuePair> params = URLEncodedUtils.parse(query, Charset.forName("UTF-8"));
-			result = a.graphBatch(params, suite);
+			result = a.graphBatch(params, suite, format);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
