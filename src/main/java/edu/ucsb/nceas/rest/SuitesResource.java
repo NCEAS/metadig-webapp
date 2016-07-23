@@ -143,7 +143,7 @@ public class SuitesResource {
     public Response aggregate(
     		@PathParam("id") String id,
     		@PathParam("query") String query) {
-		File batchResult = null;
+		String batchResult = null;
 		try {
 			Suite suite = store.getSuite(id);
 			Aggregator a = new Aggregator();
@@ -154,7 +154,29 @@ public class SuitesResource {
 			log.error(e.getMessage(), e);
 			return null;
 		} 
-		return Response.ok(batchResult).header("Content-Disposition", "attachment; filename=\"" + batchResult.getName() + "\"").build();
+		return Response.ok(batchResult).header("Content-Disposition", "attachment; filename=\"mdqe_batch.csv \"").build();
 
     }
+    
+    @GET
+    @Path("/{id}/plot/{query}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response plot(
+    		@PathParam("id") String id,
+    		@PathParam("query") String query) {
+		File result = null;
+		try {
+			Suite suite = store.getSuite(id);
+			Aggregator a = new Aggregator();
+			List<NameValuePair> params = URLEncodedUtils.parse(query, Charset.forName("UTF-8"));
+			result = a.graphBatch(params, suite);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		} 
+		return Response.ok(result).header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"").build();
+
+    }
+    
 }
