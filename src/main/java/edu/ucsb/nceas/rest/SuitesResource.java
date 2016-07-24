@@ -199,4 +199,41 @@ public class SuitesResource {
 
     }
     
+    @POST
+    @Path("/{id}/plot")
+    @Produces({MediaType.APPLICATION_SVG_XML, "application/pdf", "image/png"})
+    public Response plotSingle(
+    		@PathParam("id") String id,
+    		@FormDataParam("document") InputStream input,
+    		@Context Request r) {
+		File result = null;
+		try {
+			
+			// determine the format of plot to return
+			String format = "pdf";
+			List<Variant> vs = 
+				    Variant.mediaTypes(MediaType.APPLICATION_SVG_XML_TYPE, MediaType.valueOf("application/pdf"), MediaType.valueOf("image/png")).build();
+			Variant v = r.selectVariant(vs);
+			if (v == null) {
+			    return Response.notAcceptable(vs).build();
+			} else {
+			    MediaType mt = v.getMediaType();
+			    format = mt.getSubtype();
+			    if (format.contains("+")) {
+			    	format = format.substring(0, format.indexOf("+"));
+			    }
+			}
+			
+			Suite suite = store.getSuite(id);
+			Aggregator a = new Aggregator();
+			result = a.graphSingle(input, suite, format);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		} 
+		return Response.ok(result).header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"").build();
+
+    }
+    
 }
