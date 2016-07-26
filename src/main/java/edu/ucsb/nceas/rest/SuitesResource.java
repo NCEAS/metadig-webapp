@@ -163,7 +163,7 @@ public class SuitesResource {
     
     @GET
     @Path("/{id}/plot/{query}")
-    @Produces({MediaType.APPLICATION_SVG_XML, "application/pdf", "image/png"})
+    @Produces({"image/png", "application/pdf", MediaType.APPLICATION_SVG_XML })
     public Response plot(
     		@PathParam("id") String id,
     		@PathParam("query") String query,
@@ -174,7 +174,7 @@ public class SuitesResource {
 			// determine the format of plot to return
 			String format = "pdf";
 			List<Variant> vs = 
-				    Variant.mediaTypes(MediaType.APPLICATION_SVG_XML_TYPE, MediaType.valueOf("application/pdf"), MediaType.valueOf("image/png")).build();
+				    Variant.mediaTypes(MediaType.valueOf("image/png"), MediaType.valueOf("application/pdf"), MediaType.APPLICATION_SVG_XML_TYPE).build();
 			Variant v = r.selectVariant(vs);
 			if (v == null) {
 			    return Response.notAcceptable(vs).build();
@@ -201,7 +201,7 @@ public class SuitesResource {
     
     @POST
     @Path("/{id}/plot")
-    @Produces({MediaType.APPLICATION_SVG_XML, "application/pdf", "image/png"})
+    @Produces({"image/png", "application/pdf", MediaType.APPLICATION_SVG_XML })
     public Response plotSingle(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
@@ -212,7 +212,7 @@ public class SuitesResource {
 			// determine the format of plot to return
 			String format = "pdf";
 			List<Variant> vs = 
-				    Variant.mediaTypes(MediaType.APPLICATION_SVG_XML_TYPE, MediaType.valueOf("application/pdf"), MediaType.valueOf("image/png")).build();
+				    Variant.mediaTypes(MediaType.valueOf("image/png"), MediaType.valueOf("application/pdf"), MediaType.APPLICATION_SVG_XML_TYPE).build();
 			Variant v = r.selectVariant(vs);
 			if (v == null) {
 			    return Response.notAcceptable(vs).build();
