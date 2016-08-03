@@ -125,9 +125,12 @@ public class SuitesResource {
     @POST
     @Path("/{id}/run")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String run(
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response run(
     		@PathParam("id") String id,
-    		@FormDataParam("document") InputStream input) throws UnsupportedEncodingException, JAXBException {
+    		@FormDataParam("document") InputStream input,
+    		@Context Request r) throws UnsupportedEncodingException, JAXBException {
+    	
     	Run run = null;
 		try {
 			Suite suite = store.getSuite(id);
@@ -135,9 +138,26 @@ public class SuitesResource {
 	    	store.createRun(run);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			return null;
+			return Response.serverError().entity(e).build();
 		} 
-        return XmlMarshaller.toXml(run);
+		
+		// determine the format of plot to return
+        String resultString = null;
+		List<Variant> vs = 
+			    Variant.mediaTypes(MediaType.APPLICATION_XML_TYPE, MediaType.APPLICATION_JSON_TYPE).build();
+		Variant v = r.selectVariant(vs);
+		if (v == null) {
+		    return Response.notAcceptable(vs).build();
+		} else {
+		    MediaType mt = v.getMediaType();
+		    if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
+		    	resultString = XmlMarshaller.toXml(run);
+		    } else {
+		    	resultString = JsonMarshaller.toJson(run);
+		    }
+		}
+		
+		return Response.ok(resultString).build();
     }
     
     @GET
