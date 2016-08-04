@@ -125,7 +125,7 @@ public class SuitesResource {
     @POST
     @Path("/{id}/run")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
@@ -144,7 +144,7 @@ public class SuitesResource {
 		// determine the format of plot to return
         String resultString = null;
 		List<Variant> vs = 
-			    Variant.mediaTypes(MediaType.APPLICATION_XML_TYPE, MediaType.APPLICATION_JSON_TYPE).build();
+			    Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
 		Variant v = r.selectVariant(vs);
 		if (v == null) {
 		    return Response.notAcceptable(vs).build();
