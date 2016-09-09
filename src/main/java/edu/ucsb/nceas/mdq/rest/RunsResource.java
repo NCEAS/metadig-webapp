@@ -1,4 +1,4 @@
-package edu.ucsb.nceas.rest;
+package edu.ucsb.nceas.mdq.rest;
 
 import java.io.IOException;
 import java.io.InputStream;

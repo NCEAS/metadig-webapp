@@ -1,4 +1,4 @@
-package edu.ucsb.nceas.rest;
+package edu.ucsb.nceas.mdq.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
