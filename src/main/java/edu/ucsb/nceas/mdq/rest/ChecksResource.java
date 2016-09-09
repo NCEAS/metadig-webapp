@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,7 +14,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.IOUtils;
@@ -21,8 +26,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import edu.ucsb.nceas.mdqengine.MDQEngine;
 import edu.ucsb.nceas.mdqengine.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Check;
+import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
 
@@ -36,8 +43,11 @@ public class ChecksResource {
 	
 	private MDQStore store = null;
 	
+	private MDQEngine engine = null;
+	
 	public ChecksResource() {
 		this.store = StoreFactory.getStore();
+		this.engine = new MDQEngine();
 	}
 	
     /**
@@ -105,5 +115,43 @@ public class ChecksResource {
     	Check check = store.getCheck(id);
     	store.deleteCheck(check);
         return true;
+    }
+    
+    @POST
+    @Path("/{id}/run")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response run(
+    		@PathParam("id") String id,
+    		@FormDataParam("document") InputStream input,
+    		@Context Request r) throws UnsupportedEncodingException, JAXBException {
+    	
+    	Run run = null;
+		try {
+			Check check = store.getCheck(id);
+			run = engine.runCheck(check, input);
+	    	store.createRun(run);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return Response.serverError().entity(e).build();
+		} 
+		
+		// determine the format of plot to return
+        String resultString = null;
+		List<Variant> vs = 
+			    Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+		Variant v = r.selectVariant(vs);
+		if (v == null) {
+		    return Response.notAcceptable(vs).build();
+		} else {
+		    MediaType mt = v.getMediaType();
+		    if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
+		    	resultString = XmlMarshaller.toXml(run);
+		    } else {
+		    	resultString = JsonMarshaller.toJson(run);
+		    }
+		}
+		
+		return Response.ok(resultString).build();
     }
 }
