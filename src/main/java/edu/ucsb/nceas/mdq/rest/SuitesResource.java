@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -129,12 +130,13 @@ public class SuitesResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
+    		@FormDataParam("params") Map<String, Object> params,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
 		try {
 			Suite suite = store.getSuite(id);
-			run = engine.runSuite(suite, input);
+			run = engine.runSuite(suite, input, params);
 	    	store.createRun(run);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

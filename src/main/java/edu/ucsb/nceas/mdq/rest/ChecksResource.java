@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -124,12 +125,13 @@ public class ChecksResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
+    		@FormDataParam("params") Map<String, Object> params,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
 		try {
 			Check check = store.getCheck(id);
-			run = engine.runCheck(check, input);
+			run = engine.runCheck(check, input, params);
 	    	store.createRun(run);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
