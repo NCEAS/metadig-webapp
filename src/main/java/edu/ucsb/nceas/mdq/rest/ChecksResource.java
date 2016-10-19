@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
@@ -125,11 +127,15 @@ public class ChecksResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
-    		@FormDataParam("params") Map<String, Object> params,
+    		MultivaluedMap<String, String> formParams,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
 		try {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.putAll(formParams);
+			params.remove("id");
+			params.remove("document");
 			Check check = store.getCheck(id);
 			run = engine.runCheck(check, input, params);
 	    	store.createRun(run);
