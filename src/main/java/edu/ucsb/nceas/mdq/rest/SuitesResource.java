@@ -72,14 +72,6 @@ public class SuitesResource {
         return JsonMarshaller.toJson(suites);
     }
     
-//    @GET
-//    @Path("/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getSuiteJSON(@PathParam("id") String id) {
-//    	Suite suite = store.getSuite(id);
-//        return JsonMarshaller.toJson(suite);
-//    }
-    
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
@@ -88,8 +80,8 @@ public class SuitesResource {
         return XmlMarshaller.toXml(suite);
     }
     
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @POST
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean createSuite(@FormDataParam("suite") InputStream xml) {
     	Suite suite = null;
 		try {
@@ -102,9 +94,9 @@ public class SuitesResource {
         return true;
     }
     
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @PUT
+//    @Path("/{id}")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean updateSuite(@PathParam("id") String id, @FormDataParam("suite") InputStream xml) throws JAXBException, IOException {
     	Suite suite = null;
 		try {
@@ -117,9 +109,9 @@ public class SuitesResource {
         return true;
     }
     
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.TEXT_PLAIN)
+//    @DELETE
+//    @Path("/{id}")
+//    @Produces(MediaType.TEXT_PLAIN)
     public boolean updateSuite(@PathParam("id") String id) {
     	Suite suite = store.getSuite(id);
     	store.deleteSuite(suite);

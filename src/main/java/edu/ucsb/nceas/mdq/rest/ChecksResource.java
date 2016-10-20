@@ -66,14 +66,6 @@ public class ChecksResource {
         return JsonMarshaller.toJson(checks);
     }
     
-//    @GET
-//    @Path("/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getCheckJSON(@PathParam("id") String id) {
-//    	Check check = store.getCheck(id);
-//        return JsonMarshaller.toJson(check);
-//    }
-    
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
@@ -82,8 +74,8 @@ public class ChecksResource {
         return XmlMarshaller.toXml(check);
     }
     
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @POST
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean createCheck(@FormDataParam("check") InputStream xml) {
     	Check check = null;
 		try {
@@ -96,9 +88,9 @@ public class ChecksResource {
         return true;
     }
     
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @PUT
+//    @Path("/{id}")
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean updateCheck(@PathParam("id") String id, @FormDataParam("check") InputStream xml) throws JAXBException, IOException {
     	Check check = null;
 		try {
@@ -111,9 +103,9 @@ public class ChecksResource {
         return true;
     }
     
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.TEXT_PLAIN)
+//    @DELETE
+//    @Path("/{id}")
+//    @Produces(MediaType.TEXT_PLAIN)
     public boolean updateCheck(@PathParam("id") String id) {
     	Check check = store.getCheck(id);
     	store.deleteCheck(check);
