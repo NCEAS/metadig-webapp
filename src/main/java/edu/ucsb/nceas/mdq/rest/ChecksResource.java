@@ -119,15 +119,14 @@ public class ChecksResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
-    		MultivaluedMap<String, String> formParams,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.putAll(formParams);
-			params.remove("id");
-			params.remove("document");
+//			params.putAll(formParams);
+//			params.remove("id");
+//			params.remove("document");
 			Check check = store.getCheck(id);
 			run = engine.runCheck(check, input, params);
 	    	store.createRun(run);

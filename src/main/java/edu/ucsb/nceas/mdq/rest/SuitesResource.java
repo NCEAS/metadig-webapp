@@ -125,15 +125,11 @@ public class SuitesResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
-    		MultivaluedMap<String, String> formParams,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.putAll(formParams);
-			params.remove("id");
-			params.remove("document");
 			Suite suite = store.getSuite(id);
 			run = engine.runSuite(suite, input, params);
 	    	store.createRun(run);
