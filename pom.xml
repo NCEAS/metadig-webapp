@@ -10,7 +10,7 @@
     <name>mdq-webapp</name>
 
     <build>
-        <finalName>mdq-webapp</finalName>
+        <finalName>quality</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
