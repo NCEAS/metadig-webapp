@@ -9,7 +9,7 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install -y r-base curl libcurl4-openssl-dev libcairo-dev
   override:
-    - git clone https://github.com/amoeba/mdqengine
+    - git clone https://github.com/NCEAS/mdqengine
     - sudo R CMD BATCH --vanilla mdqengine/install-r-packages.R
     - mvn clean install -f mdqengine/pom.xml
 test:
