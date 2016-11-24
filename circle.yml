@@ -7,11 +7,12 @@ dependencies:
     - gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
     - gpg -a --export E084DAB9 | sudo apt-key add -
     - sudo apt-get update
-    - sudo apt-get install -y r-base curl libcurl4-openssl-dev libcairo-dev
+    - sudo apt-get install -y r-base curl wget libcurl4-openssl-dev libcairo-dev
   override:
-    - git clone https://github.com/NCEAS/mdqengine
-    - sudo R CMD BATCH --vanilla mdqengine/install-r-packages.R
-    - mvn clean install -f mdqengine/pom.xml
+    - wget https://github.com/NCEAS/mdqengine/archive/MDQENGINE_1_0_0.tar.gz
+    - tar xf MDQENGINE_1_0_0.tar.gz
+    - mvn clean install -f mdqengine-MDQENGINE_1_0_0/pom.xml
+    - sudo R CMD BATCH --vanilla mdqengine-MDQENGINE_1_0_0/install-r-packages.R
 test:
   override:
     - mvn clean package
