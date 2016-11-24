@@ -1,0 +1,21 @@
+machine:
+  java:
+    version: openjdk8
+dependencies:
+  pre:
+    - sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list'
+    - gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+    - gpg -a --export E084DAB9 | sudo apt-key add -
+    - sudo apt-get update
+    - sudo apt-get install -y r-base curl libcurl4-openssl-dev libcairo-dev
+  override:
+    - git clone https://github.com/NCEAS/mdqengine
+    - sudo R CMD BATCH --vanilla mdqengine/install-r-packages.R
+    - mvn clean install -f mdqengine/pom.xml
+test:
+  override:
+    - mvn clean package
+  post:
+    - mv target/*.war $CIRCLE_ARTIFACTS/
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
