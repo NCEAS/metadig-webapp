@@ -32,6 +32,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.dataone.exceptions.MarshallingException;
+import org.dataone.service.types.v2.SystemMetadata;
+import org.dataone.service.util.TypeMarshaller;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import edu.ucsb.nceas.mdqengine.Aggregator;
@@ -125,13 +128,24 @@ public class SuitesResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
+    		@FormDataParam("systemMetadata") InputStream sysMetaStream,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
+    	// include SM if it was provided
+    	SystemMetadata sysMeta = null;
+    	if (sysMetaStream != null) {
+    		try {
+				sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
+			} catch (InstantiationException | IllegalAccessException
+					| IOException | MarshallingException e) {
+				log.warn("Could not unmarshall SystemMetadata from stream", e);
+			}
+    	}
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 			Suite suite = store.getSuite(id);
-			run = engine.runSuite(suite, input, params);
+			run = engine.runSuite(suite, input, params, sysMeta);
 	    	store.createRun(run);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
