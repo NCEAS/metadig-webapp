@@ -182,7 +182,9 @@ public class SuitesResource {
 			Suite suite = store.getSuite(id);
 			Aggregator a = new Aggregator();
 			List<NameValuePair> params = URLEncodedUtils.parse(query, Charset.forName("UTF-8"));
-			batchResult = a.runBatch(params , suite);
+			
+			List<Run> runs = a.runBatch(params, suite);
+			batchResult = Aggregator.toCSV(runs.toArray(new Run[]{}));
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
