@@ -27,6 +27,9 @@ import javax.xml.bind.JAXBException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dataone.exceptions.MarshallingException;
+import org.dataone.service.types.v2.SystemMetadata;
+import org.dataone.service.util.TypeMarshaller;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import edu.ucsb.nceas.mdqengine.MDQEngine;
@@ -119,16 +122,27 @@ public class ChecksResource {
     public Response run(
     		@PathParam("id") String id,
     		@FormDataParam("document") InputStream input,
+    		@FormDataParam("systemMetadata") InputStream sysMetaStream,
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
+    	// include SM if it was provided
+    	SystemMetadata sysMeta = null;
+    	if (sysMetaStream != null) {
+    		try {
+				sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
+			} catch (InstantiationException | IllegalAccessException
+					| IOException | MarshallingException e) {
+				log.warn("Could not unmarshall SystemMetadata from stream", e);
+			}
+    	}
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 //			params.putAll(formParams);
 //			params.remove("id");
 //			params.remove("document");
 			Check check = store.getCheck(id);
-			run = engine.runCheck(check, input, params);
+			run = engine.runCheck(check, input, params, sysMeta);
 	    	store.createRun(run);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
