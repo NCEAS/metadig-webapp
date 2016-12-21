@@ -1,43 +1,34 @@
 package edu.ucsb.nceas.mdq.rest;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.dataone.exceptions.MarshallingException;
 import org.dataone.service.types.v2.SystemMetadata;
 import org.dataone.service.util.TypeMarshaller;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
-import edu.ucsb.nceas.mdqengine.Aggregator;
 import edu.ucsb.nceas.mdqengine.MDQEngine;
 import edu.ucsb.nceas.mdqengine.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
@@ -169,104 +160,6 @@ public class SuitesResource {
 		}
 		
 		return Response.ok(resultString).build();
-    }
-    
-    @GET
-    @Path("/{id}/aggregate/{query}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response aggregate(
-    		@PathParam("id") String id,
-    		@PathParam("query") String query) {
-		String batchResult = null;
-		try {
-			Suite suite = store.getSuite(id);
-			Aggregator a = new Aggregator();
-			List<NameValuePair> params = URLEncodedUtils.parse(query, Charset.forName("UTF-8"));
-			
-			List<Run> runs = a.runBatch(params, suite);
-			batchResult = Aggregator.toCSV(runs.toArray(new Run[]{}));
-			
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return null;
-		} 
-		return Response.ok(batchResult).header("Content-Disposition", "attachment; filename=\"mdqe_batch.csv \"").build();
-
-    }
-    
-    @GET
-    @Path("/{id}/plot/{query}")
-    @Produces({"image/png", "application/pdf", MediaType.APPLICATION_SVG_XML })
-    public Response plot(
-    		@PathParam("id") String id,
-    		@PathParam("query") String query,
-    		@Context Request r) {
-		File result = null;
-		try {
-			
-			// determine the format of plot to return
-			String format = "pdf";
-			List<Variant> vs = 
-				    Variant.mediaTypes(MediaType.valueOf("image/png"), MediaType.valueOf("application/pdf"), MediaType.APPLICATION_SVG_XML_TYPE).build();
-			Variant v = r.selectVariant(vs);
-			if (v == null) {
-			    return Response.notAcceptable(vs).build();
-			} else {
-			    MediaType mt = v.getMediaType();
-			    format = mt.getSubtype();
-			    if (format.contains("+")) {
-			    	format = format.substring(0, format.indexOf("+"));
-			    }
-			}
-			
-			Suite suite = store.getSuite(id);
-			Aggregator a = new Aggregator();
-			List<NameValuePair> params = URLEncodedUtils.parse(query, Charset.forName("UTF-8"));
-			result = a.graphBatch(params, suite, format);
-			
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return null;
-		} 
-		return Response.ok(result).header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"").build();
-
-    }
-    
-    @POST
-    @Path("/{id}/plot")
-    @Produces({"image/png", "application/pdf", MediaType.APPLICATION_SVG_XML })
-    public Response plotSingle(
-    		@PathParam("id") String id,
-    		@FormDataParam("document") InputStream input,
-    		@Context Request r) {
-		File result = null;
-		try {
-			
-			// determine the format of plot to return
-			String format = "pdf";
-			List<Variant> vs = 
-				    Variant.mediaTypes(MediaType.valueOf("image/png"), MediaType.valueOf("application/pdf"), MediaType.APPLICATION_SVG_XML_TYPE).build();
-			Variant v = r.selectVariant(vs);
-			if (v == null) {
-			    return Response.notAcceptable(vs).build();
-			} else {
-			    MediaType mt = v.getMediaType();
-			    format = mt.getSubtype();
-			    if (format.contains("+")) {
-			    	format = format.substring(0, format.indexOf("+"));
-			    }
-			}
-			
-			Suite suite = store.getSuite(id);
-			Aggregator a = new Aggregator();
-			result = a.graphSingle(input, suite, format);
-			
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return null;
-		} 
-		return Response.ok(result).header("Content-Disposition", "attachment; filename=\"" + result.getName() + "\"").build();
-
     }
     
 }
