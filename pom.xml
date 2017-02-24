@@ -6,7 +6,7 @@
     <groupId>edu.ucsb.nceas</groupId>
     <artifactId>mdq-webapp</artifactId>
     <packaging>war</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>mdq-webapp</name>
 
     <build>
@@ -41,7 +41,7 @@
     	<dependency>
     		<groupId>edu.ucsb.nceas</groupId>
 			<artifactId>mdqengine</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>${mdq.version}</version>
     	</dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -62,6 +62,7 @@
     </dependencies>
     <properties>
         <jersey.version>2.23.1</jersey.version>
+        <mdq.version>1.1.0</mdq.version>        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
