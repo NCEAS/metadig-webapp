@@ -9,10 +9,10 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install -y r-base curl wget libcurl4-openssl-dev libcairo-dev
   override:
-    - wget https://github.com/NCEAS/mdqengine/archive/MDQENGINE_1_0_0.tar.gz
-    - tar xf MDQENGINE_1_0_0.tar.gz
-    - sudo R CMD BATCH --vanilla mdqengine-MDQENGINE_1_0_0/install-r-packages.R
-    - mvn clean install -f mdqengine-MDQENGINE_1_0_0/pom.xml
+    - wget https://github.com/NCEAS/mdqengine/archive/MDQENGINE_1_1_BRANCH.tar.gz
+    - tar xf MDQENGINE_1_1_BRANCH.tar.gz
+    - sudo R CMD BATCH --vanilla mdqengine-MDQENGINE_1_1_BRANCH/install-r-packages.R
+    - mvn clean install -f mdqengine-MDQENGINE_1_1_BRANCH/pom.xml
 test:
   override:
     - mvn clean package
