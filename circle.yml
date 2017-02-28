@@ -20,3 +20,9 @@ test:
     - mv target/*.war $CIRCLE_ARTIFACTS/
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+deployment:
+  release:
+    tag: /MDQ_WEBAPP.+/
+    owner: NCEAS
+    commands:
+      - "true"
