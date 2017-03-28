@@ -106,7 +106,7 @@ public class SuitesResource {
 //    @DELETE
 //    @Path("/{id}")
 //    @Produces(MediaType.TEXT_PLAIN)
-    public boolean updateSuite(@PathParam("id") String id) {
+    public boolean deleteSuite(@PathParam("id") String id) {
     	Suite suite = store.getSuite(id);
     	store.deleteSuite(suite);
         return true;
