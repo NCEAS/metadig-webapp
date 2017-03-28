@@ -39,16 +39,16 @@ public class RunsResource {
      *
      * @return String that will be returned as a text/plain response.
      */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
     public String listRuns() {
     	Collection<String> runs = store.listRuns();
         return JsonMarshaller.toJson(runs);
     }
     
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.TEXT_XML)
+//    @GET
+//    @Path("/{id}")
+//    @Produces(MediaType.TEXT_XML)
     public String getRun(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
     	Run run = store.getRun(id);
         return XmlMarshaller.toXml(run);
