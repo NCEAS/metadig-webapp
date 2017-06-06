@@ -12,7 +12,7 @@ dependencies:
     - wget https://github.com/NCEAS/mdqengine/archive/MDQENGINE_1_0_0.tar.gz
     - tar xf MDQENGINE_1_0_0.tar.gz
     - sudo R CMD BATCH --vanilla mdqengine-MDQENGINE_1_0_0/install-r-packages.R
-    - mvn clean install -f mdqengine-MDQENGINE_1_0_0/pom.xml
+    - mvn clean install -DskipTests -f mdqengine-MDQENGINE_1_0_0/pom.xml
 test:
   override:
     - mvn clean package
