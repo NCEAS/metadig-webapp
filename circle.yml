@@ -9,6 +9,7 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install -y r-base curl wget libcurl4-openssl-dev libcairo-dev
   override:
+    - curl https://raw.githubusercontent.com/NCEAS/mdqengine/master/install-r-packages.R -o install-r-packages.R
     - sudo R CMD BATCH --vanilla mdqengine-MDQENGINE_1_0_0/install-r-packages.R
   cache:
     - "/usr/local/lib/R/site-library/"
