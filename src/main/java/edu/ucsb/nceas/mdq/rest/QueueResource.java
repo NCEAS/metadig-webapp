@@ -75,6 +75,10 @@ public class QueueResource {
         log.debug("handling request to start queue...");
         try {
             controller = Controller.getInstance();
+            /* First check if the controller has already been started */
+            started = controller.getIsStarted();
+            if(started) return "controller already started";
+            /* Controller hasn't been started yet, start it and check if success */
             controller.start();
             started = controller.getIsStarted();
             if(started) {
@@ -118,7 +122,7 @@ public class QueueResource {
     public String testQueue() {
         log.debug("handling request to test queue...");
         controller = Controller.getInstance();
-        controller.start();
+        if(!controller.getIsStarted()) controller.start();
         controller.test();
         log.debug("running queue test...");
         return "test sent to queue.";
