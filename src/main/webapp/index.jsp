@@ -29,6 +29,8 @@
     <pre><%=ResourceDocumenter.inspectClass(SuitesResource.class) %></pre>
     <p><a href="runs">Runs</a>
     <pre><%=ResourceDocumenter.inspectClass(RunsResource.class) %></pre>
+    <p><a href="queue">queue</a>
+    <pre><%=ResourceDocumenter.inspectClass(QueueResource.class) %></pre>
     
     
 </body>
