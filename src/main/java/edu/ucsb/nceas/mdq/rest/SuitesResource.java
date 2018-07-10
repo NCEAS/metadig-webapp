@@ -1,8 +1,6 @@
 package edu.ucsb.nceas.mdq.rest;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +23,22 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dataone.exceptions.MarshallingException;
+import org.dataone.service.types.v1.NodeReference;
 import org.dataone.service.types.v2.SystemMetadata;
 import org.dataone.service.util.TypeMarshaller;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.joda.time.DateTime;
 
 import edu.ucsb.nceas.mdqengine.MDQEngine;
+import edu.ucsb.nceas.mdqengine.Controller;
 import edu.ucsb.nceas.mdqengine.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.model.Suite;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
+import org.joda.time.DateTime;
 
-/**
+	/**
  * Root resource (exposed at "suites" path)
  */
 @Path("suites")
@@ -117,17 +119,39 @@ public class SuitesResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response run(
-    		@PathParam("id") String id,
-    		@FormDataParam("document") InputStream input,
-    		@FormDataParam("systemMetadata") InputStream sysMetaStream,
+    		@PathParam("id") String id, // id is the metadig suite id
+    		@FormDataParam("document") InputStream input,  // the input metadata document
+    		@FormDataParam("systemMetadata") InputStream sysMetaStream,  // the system metadata for the input metadata document
+            @FormDataParam("priority") String priority,  // the priority to enqueue the metadig engine request with ("high", "medium", "low")
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
     	Run run = null;
-    	// include SM if it was provided
+        String resultString = null;
+    	// Copy the sysmeta input stream because we need to read it twice
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        byte[] streamData = null;
+
+        try {
+            int read = 0;
+            // This size should be several times larger than the average system metadata
+            byte[] buff = new byte[101024];
+            while ((read = sysMetaStream.read(buff)) != -1) {
+                bos.write(buff, 0, read);
+            }
+            streamData = bos.toByteArray();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Response.serverError().entity(e).build();
+        }
+
+        ByteArrayInputStream sysmetaStream = new ByteArrayInputStream(streamData);
+
     	SystemMetadata sysMeta = null;
+    	// Read sysmeta input stream to get values to log and pass to the controller
     	if (sysMetaStream != null) {
     		try {
-				sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
+				sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysmetaStream);
 			} catch (InstantiationException | IllegalAccessException
 					| IOException | MarshallingException e) {
 				log.warn("Could not unmarshall SystemMetadata from stream", e);
