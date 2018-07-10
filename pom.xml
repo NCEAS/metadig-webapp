@@ -10,7 +10,6 @@
     <name>metadig-webapp</name>
 
     <build>
-        <finalName>metadig-webapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -20,6 +19,41 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- copy built metadig-webapp JAR file to the location needed to build the docker image -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>copy-war-file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="copy war file for Docker image build">
+                                <copy file="${project.build.directory}/metadig-webapp-${project.version}.war" tofile="${project.basedir}/Kubernetes/metadig-controller/metadig-webapp.war" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.25.2</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${docker.repo}/metadig-controller:${docker.tag}</name>
+                            <build>
+                                <dockerFileDir>${project.basedir}/Kubernetes/metadig-controller</dockerFileDir>
+                            </build>
+                        </image>
+                    </images>
                 </configuration>
             </plugin>
         </plugins>
@@ -76,9 +110,19 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
+        </dependency>
     </dependencies>
     <properties>
         <jersey.version>2.23.1</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- <docker.registry>docker.io</docker.registry> -->
+        <docker.repo>metadig</docker.repo>
+        <docker.tag>dev</docker.tag>
     </properties>
 </project>
