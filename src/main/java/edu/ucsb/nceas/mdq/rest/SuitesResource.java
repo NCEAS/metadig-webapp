@@ -157,33 +157,71 @@ public class SuitesResource {
 				log.warn("Could not unmarshall SystemMetadata from stream", e);
 			}
     	}
-		try {
-			Map<String, Object> params = new HashMap<String, Object>();
-			Suite suite = store.getSuite(id);
-			run = engine.runSuite(suite, input, params, sysMeta);
-	    	store.createRun(run);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return Response.serverError().entity(e).build();
-		} 
-		
-		// determine the format of plot to return
-        String resultString = null;
-		List<Variant> vs = 
-			    Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
-		Variant v = r.selectVariant(vs);
-		if (v == null) {
-		    return Response.notAcceptable(vs).build();
-		} else {
-		    MediaType mt = v.getMediaType();
-		    if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
-		    	resultString = XmlMarshaller.toXml(run);
-		    } else {
-		    	resultString = JsonMarshaller.toJson(run);
-		    }
-		}
-		
-		return Response.ok(resultString).build();
+
+    	// If the request is identifying itself as 'high', then process it now, otherwise send it
+        // to the processing queue.
+        if(priority.equals("high")) {
+            try {
+                log.info("Running suite " + id + " for pid " + sysMeta.getIdentifier().getValue());
+                Map<String, Object> params = new HashMap<String, Object>();
+                Suite suite = store.getSuite(id);
+                run = engine.runSuite(suite, input, params, sysMeta);
+                store.createRun(run);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return Response.serverError().entity(e).build();
+            }
+
+            // determine the format of plot to return
+            List<Variant> vs =
+                    Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+            Variant v = r.selectVariant(vs);
+            if (v == null) {
+                return Response.notAcceptable(vs).build();
+            } else {
+                MediaType mt = v.getMediaType();
+                if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
+                    resultString = XmlMarshaller.toXml(run);
+                } else {
+                    resultString = JsonMarshaller.toJson(run);
+                }
+            }
+        } else {
+            Controller metadigCtrl = null;
+            try {
+                metadigCtrl = Controller.getInstance();
+                // Start the controller if it has not already been started.
+                if (!metadigCtrl.getIsStarted()) {
+                    metadigCtrl.start();
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return Response.serverError().entity(e).build();
+            }
+
+            // Check if the metadig-engine controller has been started. If not, return a message.
+            // TODO: return a properly formatted XML error message
+            if (!metadigCtrl.getIsStarted()) {
+                return Response.serverError().build();
+            }
+
+            // Create another input stream to pass to the controller
+            ByteArrayInputStream sysmetaStream2 = new ByteArrayInputStream(streamData);
+            try {
+                DateTime requestDateTime = new DateTime();
+                NodeReference dataSource = sysMeta.getOriginMemberNode();
+                String metadataPid = sysMeta.getIdentifier().getValue();
+                log.info("Request generation of quality document for: " + dataSource.getValue() + ", PID: " + metadataPid + ", " + id + ", " + requestDateTime.toString());
+                metadigCtrl.processRequest(dataSource.getValue(), metadataPid, input, id, "", requestDateTime, sysmetaStream2);
+                resultString = "Requested generation of quality document for PID: " + metadataPid;
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return Response.serverError().entity(e).build();
+            }
+        }
+
+        log.info("Returning response of " + resultString);
+        return Response.ok(resultString).build();
     }
     
 }
