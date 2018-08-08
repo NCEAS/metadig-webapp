@@ -114,17 +114,4 @@ public class QueueResource {
             return "error: controller not stopped";
         }
     }
-
-    
-    @GET
-    @Path("test")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String testQueue() {
-        log.debug("handling request to test queue...");
-        controller = Controller.getInstance();
-        if(!controller.getIsStarted()) controller.start();
-        controller.test();
-        log.debug("running queue test...");
-        return "test sent to queue.";
-    }
 }
