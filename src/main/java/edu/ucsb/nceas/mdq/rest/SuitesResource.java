@@ -51,7 +51,8 @@ public class SuitesResource {
 	private MDQEngine engine = null;
 		
 	public SuitesResource() {
-		this.store = StoreFactory.getStore();
+	    boolean persist = false;
+		this.store = StoreFactory.getStore(persist);
 		this.engine = new MDQEngine();
 	}
 	

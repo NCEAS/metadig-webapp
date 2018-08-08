@@ -52,7 +52,8 @@ public class ChecksResource {
 	private MDQEngine engine = null;
 	
 	public ChecksResource() {
-		this.store = StoreFactory.getStore();
+		boolean persist = false;
+		this.store = StoreFactory.getStore(persist);
 		this.engine = new MDQEngine();
 	}
 	

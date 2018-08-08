@@ -2,13 +2,10 @@ package edu.ucsb.nceas.mdq.rest;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+import java.util.List;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.logging.Log;
@@ -24,13 +21,15 @@ import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
  */
 @Path("runs")
 public class RunsResource {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	private MDQStore store = null;
 	
 	public RunsResource() {
-		this.store = StoreFactory.getStore();
+	    // Retrieve runs from a database
+	    boolean persist = true;
+		this.store = StoreFactory.getStore(persist);
 	}
 	
     /**
@@ -46,19 +45,50 @@ public class RunsResource {
         return JsonMarshaller.toJson(runs);
     }
     
-//    @GET
-//    @Path("/{id}")
-//    @Produces(MediaType.TEXT_XML)
-    public String getRun(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
-    	Run run = store.getRun(id);
-        return XmlMarshaller.toXml(run);
+    @GET
+    @Path("/{suite}/{id : .+}") // Allow for '/' in the metadataId
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId, @Context Request r) throws UnsupportedEncodingException, JAXBException {
+        if(!this.store.isAvailable()) {
+            store.renew();
+        }
+        log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
+    	Run run = store.getRun(metadataId, suiteId);
+
+    	if(run != null) {
+            log.debug("Retrieved run with pid: " + run.getId());
+        } else {
+            log.info("Run not retrieved for suiteId: " + suiteId + ", metadataId: " + metadataId);
+    	    if(run == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        }
+
+        // Get the HTML request 'Accept' header specified media type and return that type
+        String resultString = null;
+        List<Variant> vs =
+                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+        Variant v = r.selectVariant(vs);
+        if (v == null) {
+            return Response.notAcceptable(vs).build();
+        } else {
+            MediaType mt = v.getMediaType();
+            if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
+                resultString = XmlMarshaller.toXml(run);
+            } else {
+                resultString = JsonMarshaller.toJson(run);
+            }
+        }
+
+        return Response.ok(resultString).build();
+
     }
     
 //    @DELETE
 //    @Path("/{id}")
 //    @Produces(MediaType.TEXT_PLAIN)
-    public boolean updateRun(@PathParam("id") String id) {
-    	Run run = store.getRun(id);
+    public boolean updateRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId) {
+    	Run run = store.getRun(metadataId, suiteId);
     	store.deleteRun(run);
         return true;
     }
