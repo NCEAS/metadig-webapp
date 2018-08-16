@@ -18,16 +18,15 @@ public class StoreFactory {
 
 	private static MDQStore store = null;
 
-	public static MDQStore getStore(boolean persist) {
+	public static MDQStore getStore(boolean persist) throws MetadigStoreException {
 		if (store == null) {
 			if (persist) {
 				log.debug("Creating new MDQ persistent store");
 				try {
 					store = new DatabaseStore();
-				} catch (SQLException e | ClassNotFoundException e) {
+				} catch (MetadigStoreException e) {
 					e.printStackTrace();
-					MetadigException me = new MetadigStoreException("Unable to create the database store.");
-					me.initCause(e);
+					throw(e);
 				}
 			} else {
 				log.debug("Creating new MDQ store");

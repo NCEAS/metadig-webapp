@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.JAXBException;
 
+import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,11 +27,11 @@ public class RunsResource {
 	
 	private MDQStore store = null;
 	
-	public RunsResource() {
+	public RunsResource() throws MetadigStoreException {
 	    // Retrieve runs from a database
 	    boolean persist = true;
-		this.store = StoreFactory.getStore(persist);
-	}
+        this.store = StoreFactory.getStore(persist);
+    }
 	
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -50,7 +51,13 @@ public class RunsResource {
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId, @Context Request r) throws UnsupportedEncodingException, JAXBException {
         if(!this.store.isAvailable()) {
-            store.renew();
+            try {
+                store.renew();
+            } catch (MetadigStoreException e) {
+                e.printStackTrace();
+                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+                throw(ise);
+            }
         }
         log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
     	Run run = store.getRun(metadataId, suiteId);
@@ -75,7 +82,9 @@ public class RunsResource {
             MediaType mt = v.getMediaType();
             if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
                 resultString = XmlMarshaller.toXml(run);
+                log.debug("Returning quality report as text/xml");
             } else {
+                log.debug("Returning quality report as application/json");
                 resultString = JsonMarshaller.toJson(run);
             }
         }

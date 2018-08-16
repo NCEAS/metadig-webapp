@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
+import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,8 +52,8 @@ public class ChecksResource {
 	
 	private MDQEngine engine = null;
 	
-	public ChecksResource() {
-		boolean persist = false;
+	public ChecksResource() throws MetadigStoreException {
+		boolean persist = true;
 		this.store = StoreFactory.getStore(persist);
 		this.engine = new MDQEngine();
 	}
