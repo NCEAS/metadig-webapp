@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
+import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,8 +51,8 @@ public class SuitesResource {
 	
 	private MDQEngine engine = null;
 		
-	public SuitesResource() {
-	    boolean persist = false;
+	public SuitesResource() throws MetadigStoreException {
+	    boolean persist = true;
 		this.store = StoreFactory.getStore(persist);
 		this.engine = new MDQEngine();
 	}
@@ -126,6 +127,7 @@ public class SuitesResource {
             @FormDataParam("priority") String priority,  // the priority to enqueue the metadig engine request with ("high", "medium", "low")
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
     	
+        if(priority == null) priority = "low";
     	Run run = null;
         String resultString = null;
     	// Copy the sysmeta input stream because we need to read it twice
@@ -212,17 +214,15 @@ public class SuitesResource {
                 DateTime requestDateTime = new DateTime();
                 NodeReference dataSource = sysMeta.getOriginMemberNode();
                 String metadataPid = sysMeta.getIdentifier().getValue();
-                log.info("Request generation of quality document for: " + dataSource.getValue() + ", PID: " + metadataPid + ", " + id + ", " + requestDateTime.toString());
+                log.info("Queue generation request of quality document for: " + dataSource.getValue() + ", PID: " + metadataPid + ", " + id + ", " + requestDateTime.toString());
                 metadigCtrl.processRequest(dataSource.getValue(), metadataPid, input, id, "", requestDateTime, sysmetaStream2);
-                resultString = "Requested generation of quality document for PID: " + metadataPid;
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Response.serverError().entity(e).build();
             }
         }
 
-        log.info("Returning response of " + resultString);
-        return Response.ok(resultString).build();
+        return Response.ok().build();
     }
     
 }
