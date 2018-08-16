@@ -2,6 +2,7 @@ package edu.ucsb.nceas.mdq;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.IOException;
@@ -14,18 +15,20 @@ public class MetadigContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        log.info("Metadig 'contextInitialized' called.");
+            log.debug("Metadig 'contextInitialized' called.");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        log.info("Metadig 'contextDestroyed' called.");
+        log.debug("Metadig 'contextDestroyed' called.");
         Controller controller = Controller.getInstance();
         if(controller.getIsStarted()) {
             try {
+                log.debug("Shutting down controller...");
                 controller.shutdown();
-                log.info("Shutting down controller...");
+                log.info("Controller shutdonw successfully.");
             } catch (IOException | TimeoutException e) {
+                log.error("Error shutting down metadig controller.");
                 e.printStackTrace();
             }
         }
