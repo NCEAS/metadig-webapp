@@ -32,7 +32,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import edu.ucsb.nceas.mdqengine.Controller;
 import edu.ucsb.nceas.mdqengine.MDQEngine;
-import edu.ucsb.nceas.mdqengine.MDQStore;
+import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;

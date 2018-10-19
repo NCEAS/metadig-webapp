@@ -12,7 +12,7 @@ import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import edu.ucsb.nceas.mdqengine.MDQStore;
+import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;

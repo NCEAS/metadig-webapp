@@ -5,7 +5,7 @@ import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import edu.ucsb.nceas.mdqengine.MDQStore;
+import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Check;
 import edu.ucsb.nceas.mdqengine.store.DatabaseStore;
 import edu.ucsb.nceas.mdqengine.store.InMemoryStore;

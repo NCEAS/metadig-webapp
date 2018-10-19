@@ -34,7 +34,7 @@ import org.dataone.service.util.TypeMarshaller;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import edu.ucsb.nceas.mdqengine.MDQEngine;
-import edu.ucsb.nceas.mdqengine.MDQStore;
+import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Check;
 import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;

@@ -32,7 +32,7 @@ import org.joda.time.DateTime;
 
 import edu.ucsb.nceas.mdqengine.MDQEngine;
 import edu.ucsb.nceas.mdqengine.Controller;
-import edu.ucsb.nceas.mdqengine.MDQStore;
+import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.model.Suite;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
