@@ -50,6 +50,8 @@ public class SuitesResource {
 	private MDQStore store = null;
 	
 	private MDQEngine engine = null;
+
+    private static Controller metadigCtrl = null;
 		
 	public SuitesResource() throws MetadigStoreException {
 	    boolean persist = true;
@@ -190,12 +192,13 @@ public class SuitesResource {
                 }
             }
         } else {
-            Controller metadigCtrl = null;
             try {
-                metadigCtrl = Controller.getInstance();
-                // Start the controller if it has not already been started.
-                if (!metadigCtrl.getIsStarted()) {
-                    metadigCtrl.start();
+                if(metadigCtrl == null) {
+                    metadigCtrl = Controller.getInstance();
+                    // Start the controller if it has not already been started.
+                    if (!metadigCtrl.getIsStarted()) {
+                        metadigCtrl.start();
+                    }
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
