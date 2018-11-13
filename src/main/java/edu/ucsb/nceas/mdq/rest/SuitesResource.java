@@ -20,6 +20,7 @@ import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
+import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
