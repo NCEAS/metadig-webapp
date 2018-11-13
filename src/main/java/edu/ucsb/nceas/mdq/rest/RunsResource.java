@@ -9,6 +9,8 @@ import javax.ws.rs.core.*;
 import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
+import edu.ucsb.nceas.mdqengine.store.MNStore;
+import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,13 +26,17 @@ import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
 public class RunsResource {
 
 	private Log log = LogFactory.getLog(this.getClass());
-	
 	private MDQStore store = null;
 	
 	public RunsResource() throws MetadigStoreException {
-	    // Retrieve runs from a database
-	    boolean persist = true;
-        this.store = StoreFactory.getStore(persist);
+        boolean persist = true;
+        try {
+            store = StoreFactory.getStore(persist);
+        } catch (MetadigStoreException mse) {
+            mse.printStackTrace();
+            InternalServerErrorException ise = new InternalServerErrorException(mse.getMessage());
+            throw(ise);
+        }
     }
 	
     /**
@@ -42,6 +48,17 @@ public class RunsResource {
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
     public String listRuns() {
+        // persist = true causes a database based store to be created by the factory.
+        if(!this.store.isAvailable()) {
+            try {
+                store.renew();
+            } catch (MetadigStoreException e) {
+                e.printStackTrace();
+                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+                throw(ise);
+            }
+        }
+
     	Collection<String> runs = store.listRuns();
         return JsonMarshaller.toJson(runs);
     }
@@ -50,6 +67,7 @@ public class RunsResource {
     @Path("/{suite}/{id : .+}") // Allow for '/' in the metadataId
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId, @Context Request r) throws UnsupportedEncodingException, JAXBException {
+
         if(!this.store.isAvailable()) {
             try {
                 store.renew();
