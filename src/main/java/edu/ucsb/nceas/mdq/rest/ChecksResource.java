@@ -37,6 +37,7 @@ import edu.ucsb.nceas.mdqengine.MDQEngine;
 import edu.ucsb.nceas.mdqengine.store.MDQStore;
 import edu.ucsb.nceas.mdqengine.model.Check;
 import edu.ucsb.nceas.mdqengine.model.Run;
+import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
 
