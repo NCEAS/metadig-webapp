@@ -54,9 +54,10 @@ public class ChecksResource {
 	private MDQEngine engine = null;
 	
 	public ChecksResource() throws MetadigStoreException {
-		boolean persist = true;
+		boolean persist = false;
 		this.store = StoreFactory.getStore(persist);
 		this.engine = new MDQEngine();
+		this.engine.setStore(this.store);
 	}
 	
     /**
