@@ -6,12 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
@@ -19,8 +14,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
+import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,17 +45,17 @@ public class SuitesResource {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	private MDQStore store = null;
-	
-	private MDQEngine engine = null;
-
     private static Controller metadigCtrl = null;
 		
-	public SuitesResource() throws MetadigStoreException {
-	    boolean persist = true;
-		this.store = StoreFactory.getStore(persist);
-		this.engine = new MDQEngine();
-	}
+	public SuitesResource() throws InternalServerErrorException {
+//	    try {
+//            //this.store = StoreFactory.getStore(persist);
+//            this.engine = new MDQEngine();
+//        } catch (MetadigException | IOException | ConfigurationException e) {
+//            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+//            throw(ise);
+//        }
+    }
 	
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -69,7 +66,18 @@ public class SuitesResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listSuites() {
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+        try {
+            store = StoreFactory.getStore(persist);
+            engine = new MDQEngine();
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        }
     	Collection<String> suites = store.listSuites();
+    	store.shutdown();
         return JsonMarshaller.toJson(suites);
     }
     
@@ -77,13 +85,33 @@ public class SuitesResource {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     public String getSuite(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+        try {
+            store = StoreFactory.getStore(persist);
+            engine = new MDQEngine();
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        }
     	Suite suite = store.getSuite(id);
-        return XmlMarshaller.toXml(suite);
+        return XmlMarshaller.toXml(suite, true);
     }
     
 //    @POST
 //    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean createSuite(@FormDataParam("suite") InputStream xml) {
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+        try {
+            store = StoreFactory.getStore(persist);
+            engine = new MDQEngine();
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        }
     	Suite suite = null;
 		try {
 			suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
@@ -99,6 +127,16 @@ public class SuitesResource {
 //    @Path("/{id}")
 //    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public boolean updateSuite(@PathParam("id") String id, @FormDataParam("suite") InputStream xml) throws JAXBException, IOException {
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+        try {
+            store = StoreFactory.getStore(persist);
+            engine = new MDQEngine();
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        }
     	Suite suite = null;
 		try {
 			suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
@@ -114,6 +152,16 @@ public class SuitesResource {
 //    @Path("/{id}")
 //    @Produces(MediaType.TEXT_PLAIN)
     public boolean deleteSuite(@PathParam("id") String id) {
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+        try {
+            store = StoreFactory.getStore(persist);
+            engine = new MDQEngine();
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        }
     	Suite suite = store.getSuite(id);
     	store.deleteSuite(suite);
         return true;
@@ -129,7 +177,11 @@ public class SuitesResource {
     		@FormDataParam("systemMetadata") InputStream sysMetaStream,  // the system metadata for the input metadata document
             @FormDataParam("priority") String priority,  // the priority to enqueue the metadig engine request with ("high", "medium", "low")
     		@Context Request r) throws UnsupportedEncodingException, JAXBException {
-    	
+
+        boolean persist = true;
+        MDQStore store = null;
+        MDQEngine engine = null;
+
         if(priority == null) priority = "low";
     	Run run = null;
         String resultString = null;
@@ -167,6 +219,14 @@ public class SuitesResource {
     	// If the request is identifying itself as 'high', then process it now, otherwise send it
         // to the processing queue.
         if(priority.equals("high")) {
+
+            try {
+                store = StoreFactory.getStore(persist);
+                engine = new MDQEngine();
+            } catch (MetadigException | IOException | ConfigurationException e) {
+                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+                throw(ise);
+            }
             try {
                 log.info("Running suite " + id + " for pid " + sysMeta.getIdentifier().getValue());
                 Map<String, Object> params = new HashMap<String, Object>();
@@ -187,7 +247,7 @@ public class SuitesResource {
             } else {
                 MediaType mt = v.getMediaType();
                 if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
-                    resultString = XmlMarshaller.toXml(run);
+                    resultString = XmlMarshaller.toXml(run, true);
                 } else {
                     resultString = JsonMarshaller.toJson(run);
                 }
