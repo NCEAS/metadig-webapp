@@ -1,6 +1,7 @@
 package edu.ucsb.nceas.mdq.rest;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 
@@ -78,6 +79,13 @@ public class RunsResource {
                 throw(ise);
             }
         }
+        // Decode just the pid portion of the URL
+        try {
+            metadataId = java.net.URLDecoder.decode(metadataId, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            // not going to happen - value came from JDK's own StandardCharsets
+        }
+
         log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
     	Run run = store.getRun(metadataId, suiteId);
 
@@ -100,7 +108,7 @@ public class RunsResource {
         } else {
             MediaType mt = v.getMediaType();
             if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
-                resultString = XmlMarshaller.toXml(run);
+                resultString = XmlMarshaller.toXml(run, true);
                 log.debug("Returning quality report as text/xml");
             } else {
                 log.debug("Returning quality report as application/json");
@@ -116,6 +124,14 @@ public class RunsResource {
 //    @Path("/{id}")
 //    @Produces(MediaType.TEXT_PLAIN)
     public boolean updateRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId) {
+
+        // Decode just the pid portion of the URL
+        try {
+            metadataId = java.net.URLDecoder.decode(metadataId, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            // not going to happen - value came from JDK's own StandardCharsets
+        }
+
     	Run run = store.getRun(metadataId, suiteId);
     	store.deleteRun(run);
         return true;
