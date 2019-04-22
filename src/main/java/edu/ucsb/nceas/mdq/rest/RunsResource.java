@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.JAXBException;
 
+import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import edu.ucsb.nceas.mdqengine.store.MNStore;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
@@ -28,11 +29,11 @@ public class RunsResource {
 	private Log log = LogFactory.getLog(this.getClass());
 	private MDQStore store = null;
 	
-	public RunsResource() throws MetadigStoreException {
+	public RunsResource() throws InternalServerErrorException {
         boolean persist = true;
         try {
             store = StoreFactory.getStore(persist);
-        } catch (MetadigStoreException mse) {
+        } catch (MetadigException mse) {
             mse.printStackTrace();
             InternalServerErrorException ise = new InternalServerErrorException(mse.getMessage());
             throw(ise);
@@ -52,7 +53,7 @@ public class RunsResource {
         if(!this.store.isAvailable()) {
             try {
                 store.renew();
-            } catch (MetadigStoreException e) {
+            } catch (MetadigException e) {
                 e.printStackTrace();
                 InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
                 throw(ise);
