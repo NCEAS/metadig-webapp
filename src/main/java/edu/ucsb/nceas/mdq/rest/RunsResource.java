@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
-import edu.ucsb.nceas.mdqengine.store.MNStore;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,17 +27,8 @@ import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
 public class RunsResource {
 
 	private Log log = LogFactory.getLog(this.getClass());
-	private MDQStore store = null;
-	
-	public RunsResource() throws InternalServerErrorException {
-        boolean persist = true;
-        try {
-            store = StoreFactory.getStore(persist);
-        } catch (MetadigException mse) {
-            mse.printStackTrace();
-            InternalServerErrorException ise = new InternalServerErrorException(mse.getMessage());
-            throw(ise);
-        }
+
+	public RunsResource() {
     }
 	
     /**
@@ -51,17 +41,17 @@ public class RunsResource {
 //    @Produces(MediaType.APPLICATION_JSON)
     public String listRuns() {
         // persist = true causes a database based store to be created by the factory.
-        if(!this.store.isAvailable()) {
-            try {
-                store.renew();
-            } catch (MetadigException e) {
-                e.printStackTrace();
-                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-                throw(ise);
-            }
+        boolean persist = true;
+        MDQStore store = null;
+        try {
+            store = StoreFactory.getStore(persist);
+        } catch (MetadigException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
         }
 
     	Collection<String> runs = store.listRuns();
+        store.shutdown();
         return JsonMarshaller.toJson(runs);
     }
     
@@ -70,14 +60,13 @@ public class RunsResource {
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId, @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
-        if(!this.store.isAvailable()) {
-            try {
-                store.renew();
-            } catch (MetadigStoreException e) {
-                e.printStackTrace();
-                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-                throw(ise);
-            }
+        boolean persist = true;
+        MDQStore store = null;
+        try {
+            store = StoreFactory.getStore(persist);
+        } catch (MetadigException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
         }
         // Decode just the pid portion of the URL
         try {
@@ -86,8 +75,16 @@ public class RunsResource {
             // not going to happen - value came from JDK's own StandardCharsets
         }
 
+        Run run = null;
         log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
-    	Run run = store.getRun(metadataId, suiteId);
+        try {
+            run = store.getRun(metadataId, suiteId);
+        } catch (MetadigStoreException e) {
+            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+            throw(ise);
+        } finally {
+            store.shutdown();
+        }
 
     	if(run != null) {
             log.debug("Retrieved run with pid: " + run.getId());
@@ -118,22 +115,5 @@ public class RunsResource {
 
         return Response.ok(resultString).build();
 
-    }
-    
-//    @DELETE
-//    @Path("/{id}")
-//    @Produces(MediaType.TEXT_PLAIN)
-    public boolean updateRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId) {
-
-        // Decode just the pid portion of the URL
-        try {
-            metadataId = java.net.URLDecoder.decode(metadataId, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            // not going to happen - value came from JDK's own StandardCharsets
-        }
-
-    	Run run = store.getRun(metadataId, suiteId);
-    	store.deleteRun(run);
-        return true;
     }
 }
