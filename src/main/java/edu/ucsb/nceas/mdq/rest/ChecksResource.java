@@ -24,7 +24,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
+import com.hp.hpl.jena.shared.ConfigException;
+import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
+import net.sf.saxon.functions.ConstantFunction;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -56,8 +60,13 @@ public class ChecksResource {
 	public ChecksResource() throws MetadigStoreException {
 		boolean persist = false;
 		this.store = StoreFactory.getStore(persist);
-		this.engine = new MDQEngine();
-		this.engine.setStore(this.store);
+
+		try {
+			this.engine = new MDQEngine();
+			this.engine.setStore(this.store);
+		} catch (MetadigException | IOException | ConfigurationException e) {
+			log.error(e.getMessage(), e);
+		}
 	}
 	
     /**
@@ -78,7 +87,7 @@ public class ChecksResource {
     @Produces(MediaType.TEXT_XML)
     public String getCheck(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
     	Check check = store.getCheck(id);
-        return XmlMarshaller.toXml(check);
+        return (String) XmlMarshaller.toXml(check, true);
     }
     
 //    @POST
@@ -163,7 +172,7 @@ public class ChecksResource {
 		} else {
 		    MediaType mt = v.getMediaType();
 		    if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
-		    	resultString = XmlMarshaller.toXml(run);
+		    	resultString = XmlMarshaller.toXml(run, true);
 		    } else {
 		    	resultString = JsonMarshaller.toJson(run);
 		    }
