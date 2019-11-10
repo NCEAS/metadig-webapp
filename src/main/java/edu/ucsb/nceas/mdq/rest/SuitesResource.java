@@ -279,7 +279,7 @@ public class SuitesResource {
                 NodeReference dataSource = sysMeta.getOriginMemberNode();
                 String metadataPid = sysMeta.getIdentifier().getValue();
                 log.info("Queue generation request of quality document for: " + dataSource.getValue() + ", PID: " + metadataPid + ", " + id + ", " + requestDateTime.toString());
-                metadigCtrl.processRequest(dataSource.getValue(), metadataPid, input, id, "", requestDateTime, sysmetaStream2);
+                metadigCtrl.processQualityRequest(dataSource.getValue(), metadataPid, input, id, "", requestDateTime, sysmetaStream2);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Response.serverError().entity(e).build();

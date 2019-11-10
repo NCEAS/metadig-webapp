@@ -48,9 +48,9 @@ public class RootResource {
     	sb.append("<pre>"
     			+ ResourceDocumenter.inspectClass(RunsResource.class)
     			+ "</pre>");
-        sb.append("<p><a href='" + context + "queue'>Queue</a>");
+        sb.append("<p><a href='" + context + "graph'>Graph</a>");
         sb.append("<pre>"
-            	+ ResourceDocumenter.inspectClass(QueueResource.class)
+            	+ ResourceDocumenter.inspectClass(GraphResource.class)
             	+ "</pre>");
     	return sb.toString();
     }
