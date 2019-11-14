@@ -1,6 +1,7 @@
 <%@page import="edu.ucsb.nceas.mdq.rest.RunsResource"%>
 <%@page import="edu.ucsb.nceas.mdq.rest.SuitesResource"%>
 <%@page import="edu.ucsb.nceas.mdq.rest.ChecksResource"%>
+<%@page import="edu.ucsb.nceas.mdq.util.GraphResource"%>
 <%@page import="edu.ucsb.nceas.mdq.util.ResourceDocumenter"%>
 <html>
 <body>
@@ -29,8 +30,8 @@
     <pre><%=ResourceDocumenter.inspectClass(SuitesResource.class) %></pre>
     <p><a href="runs">Runs</a>
     <pre><%=ResourceDocumenter.inspectClass(RunsResource.class) %></pre>
-    <p><a href="queue">queue</a>
-    <pre><%=ResourceDocumenter.inspectClass(QueueResource.class) %></pre>
+    <p><a href="scores">graph</a>
+    <pre><%=ResourceDocumenter.inspectClass(ScoresResource.class) %></pre>
     
     
 </body>
