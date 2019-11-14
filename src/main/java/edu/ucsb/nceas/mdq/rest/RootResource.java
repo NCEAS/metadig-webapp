@@ -7,7 +7,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 import edu.ucsb.nceas.mdq.util.ResourceDocumenter;
@@ -50,7 +49,7 @@ public class RootResource {
     			+ "</pre>");
         sb.append("<p><a href='" + context + "graph'>Graph</a>");
         sb.append("<pre>"
-            	+ ResourceDocumenter.inspectClass(GraphResource.class)
+            	+ ResourceDocumenter.inspectClass(ScoresResource.class)
             	+ "</pre>");
     	return sb.toString();
     }
