@@ -1,7 +1,6 @@
 package edu.ucsb.nceas.mdq.rest;
 
 import java.io.*;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -9,60 +8,31 @@ import javax.ws.rs.core.*;
 import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.Controller;
-import edu.ucsb.nceas.mdqengine.MDQEngine;
+import edu.ucsb.nceas.mdqengine.exception.MetadigEntryNotFound;
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
+import edu.ucsb.nceas.mdqengine.exception.MetadigFilestoreException;
 import edu.ucsb.nceas.mdqengine.filestore.MetadigFile;
 import edu.ucsb.nceas.mdqengine.filestore.MetadigFileStore;
 import edu.ucsb.nceas.mdqengine.filestore.StorageType;
-import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
-import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
-import edu.ucsb.nceas.mdqengine.store.StoreFactory;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import edu.ucsb.nceas.mdqengine.store.MDQStore;
-import edu.ucsb.nceas.mdqengine.model.Run;
-
 import org.joda.time.DateTime;
 
-@Path("graph")
-public class GraphResource {
+@Path("scores")
+public class ScoresResource {
 
     private Log log = LogFactory.getLog(this.getClass());
 
     private static Controller metadigCtrl = null;
 
-    public GraphResource() throws InternalServerErrorException {
+    public ScoresResource() throws InternalServerErrorException {
     }
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String listSuites() {
-        boolean persist = true;
-        MDQStore store = null;
-        MDQEngine engine = null;
-        try {
-            store = StoreFactory.getStore(persist);
-            engine = new MDQEngine();
-        } catch (MetadigException | IOException | ConfigurationException e) {
-            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-            throw(ise);
-        }
-        Collection<String> suites = store.listSuites();
-        store.shutdown();
-        return JsonMarshaller.toJson(suites);
-    }
-    /**
-     * Retrieve an aggregated quality report.
+     * Retrieve aggregated quality scores.
      * <p>
-     *     The report is returned as either an image file or CSV file
+     *     The scores are returned as either an image file or CSV file
      *     containing the aggregated quality scores.
      * </p>
      *
@@ -70,12 +40,13 @@ public class GraphResource {
      */
 
     @GET
-    @Path("/{collection}/{suite}/{node}")
-    @Produces({ MediaType.APPLICATION_OCTET_STREAM, MediaType.TEXT_PLAIN })
-    public Response getGraph(@PathParam("collection") String collectionId, @PathParam("suite") String suiteId, @PathParam("node") String nodeId, @Context Request r) {
+    @Produces({ MediaType.APPLICATION_OCTET_STREAM, MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Response getScores(@QueryParam("collection") String collectionId,
+                              @QueryParam("suite") String suiteId,
+                              @QueryParam("node") String nodeId,
+                              @Context Request r) {
 
-
-        log.info("Graph 'get' request. collection: " + collectionId + ", suite: " + suiteId + ",node: " + nodeId);
+        log.info("Scores 'get' request. collection: " + collectionId + ", suite: " + suiteId + ", node: " + nodeId);
         MetadigFileStore filestore = null;
 
         try {
@@ -133,6 +104,15 @@ public class GraphResource {
 
         try {
             statsFile = filestore.getFile(mdFile);
+        } catch (MetadigFilestoreException mse) {
+                log.error("Unable to get file: " + mse.getMessage());
+                if(mse.getCause() instanceof MetadigEntryNotFound) {
+                    log.debug("file not found");
+                    return Response.status(404).type(MediaType.APPLICATION_JSON).build();
+                } else {
+                    log.debug("something else");
+                    return Response.serverError().entity(mse).type(MediaType.APPLICATION_JSON).build();
+                }
         } catch (Exception e) {
             log.error("Error");
             log.error(e.getMessage(), e);
@@ -147,21 +127,15 @@ public class GraphResource {
     /**
      * Create an aggregated quality score graph.
      *
-     * @param id
-     * @param project
-     * @param r
-     * @return
      * @throws UnsupportedEncodingException
      * @throws JAXBException
      */
     @POST
-    @Path("/{collection}/{suite}/{node}")
-    //@Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response run(
-            @PathParam("collection") String collectionId, // id is the metadig suite id
-            @PathParam("suite") String suiteId,
-            @PathParam("node") String nodeId,
+            @QueryParam("collection") String collectionId, // id is the metadig suite id
+            @QueryParam("suite") String suiteId,
+            @QueryParam("node") String nodeId,
             @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
 
@@ -181,8 +155,8 @@ public class GraphResource {
                     // Start the controller if it has not already been started.
                     if (!metadigCtrl.getIsStarted()) {
                         metadigCtrl.start();
+                        log.info("started controller");
                     }
-                    log.info("started controller");
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -200,16 +174,16 @@ public class GraphResource {
             // ByteArrayInputStream sysmetaStream2 = new ByteArrayInputStream(streamData);
             try {
                 DateTime requestDateTime = new DateTime();
-
-                log.info("Queue generation request of quality document for collection id: " + collectionId);
                 String projectName = null;
                 String authTokenName = null;
-                String memberNode = null;
                 String serviceUrl = null;
                 String formatFamily = null;
 
-                metadigCtrl.processGraphRequest(collectionId, projectName, authTokenName, memberNode, serviceUrl,
+                metadigCtrl.processScorerRequest(collectionId, projectName, authTokenName, nodeId, serviceUrl,
                         formatFamily, suiteId, requestDateTime);
+
+                log.info("Queued generation request of score file for collection id: " + collectionId + ", suiteId: " + suiteId
+                        + ", nodeid: " + nodeId);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Response.serverError().entity(e).build();
