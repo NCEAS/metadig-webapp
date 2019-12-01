@@ -23,8 +23,11 @@ import org.joda.time.DateTime;
 public class ScoresResource {
 
     private Log log = LogFactory.getLog(this.getClass());
-
     private static Controller metadigCtrl = null;
+    private MediaType IMAGE_PNG_TYPE = new MediaType("image", "png");
+    private static final String IMAGE_PNG = "image/png";
+    private MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
+    private static final String TEXT_CSV = "text/csv";
 
     public ScoresResource() throws InternalServerErrorException {
     }
@@ -40,7 +43,7 @@ public class ScoresResource {
      */
 
     @GET
-    @Produces({ MediaType.APPLICATION_OCTET_STREAM, MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Produces({ IMAGE_PNG, TEXT_CSV, MediaType.APPLICATION_JSON})
     public Response getScores(@QueryParam("collection") String collectionId,
                               @QueryParam("suite") String suiteId,
                               @QueryParam("node") String nodeId,
@@ -80,25 +83,23 @@ public class ScoresResource {
 
         // Return the statistics in the format (media type) requested from the HTML 'Accept' header
         String resultString = null;
-        List<Variant> vs = Variant.mediaTypes(MediaType.APPLICATION_OCTET_STREAM_TYPE, MediaType.TEXT_PLAIN_TYPE).build();
+        List<Variant> vs = Variant.mediaTypes(IMAGE_PNG_TYPE, TEXT_CSV_TYPE).build();
         Variant v = r.selectVariant(vs);
         if (v == null) {
             return Response.notAcceptable(vs).build();
         } else {
             MediaType mt = v.getMediaType();
             // Return a graphics file
-            if (mt.equals(MediaType.APPLICATION_OCTET_STREAM_TYPE)) {
-                log.debug("Will return mediaType 'image/jpeg'");
-                mediaType = "image/jpeg";
-                mdFile.setStorageType(StorageType.GRAPH.toString());
-                mdFile.setMediaType(mediaType);
-            } else {
-                log.debug("Will return mediaType 'text/csv'");
+            if (mt.equals(TEXT_CSV_TYPE)) {
                 // Return a CVS file with the statistics
-                mediaType = "text/csv";
+                mediaType = TEXT_CSV;
                 mdFile.setStorageType(StorageType.DATA.toString());
                 mdFile.setMediaType(mediaType);
-                mediaType = MediaType.TEXT_PLAIN;
+            } else {
+                log.debug("Will return mediaType: " + IMAGE_PNG);
+                mediaType = IMAGE_PNG;
+                mdFile.setStorageType(StorageType.GRAPH.toString());
+                mdFile.setMediaType(mediaType);
             }
         }
 
@@ -135,11 +136,12 @@ public class ScoresResource {
     public Response run(
             @QueryParam("collection") String collectionId, // id is the metadig suite id
             @QueryParam("suite") String suiteId,
+            @QueryParam("format") String formatFamily,
             @QueryParam("node") String nodeId,
             @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
 
-        log.info("Graph 'post' request. collection: " + collectionId + ", suite: " + suiteId + ",node: " + nodeId);
+        log.info("Graph 'post' request. collection: " + collectionId + ", suite: " + suiteId);
         String resultString = null;
         // Copy the sysmeta input stream because we need to read it twice
         //ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -149,45 +151,44 @@ public class ScoresResource {
         // If the request is identifying itself as 'high', then process it now, otherwise send it
         // to the processing queue.
 
-            try {
-                if(metadigCtrl == null) {
-                    metadigCtrl = Controller.getInstance();
-                    // Start the controller if it has not already been started.
-                    if (!metadigCtrl.getIsStarted()) {
-                        metadigCtrl.start();
-                        log.info("started controller");
-                    }
+        try {
+            if(metadigCtrl == null) {
+                metadigCtrl = Controller.getInstance();
+                // Start the controller if it has not already been started.
+                if (!metadigCtrl.getIsStarted()) {
+                    metadigCtrl.start();
+                    log.info("started controller");
                 }
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return Response.serverError().entity(e).build();
             }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Response.serverError().entity(e).build();
+        }
 
-            // Check if the metadig-engine controller has been started. If not, return a message.
-            // TODO: return a properly formatted XML error message
-            if (!metadigCtrl.getIsStarted()) {
-                log.error("Controller not started");
-                return Response.serverError().build();
-            }
+        // Check if the metadig-engine controller has been started. If not, return a message.
+        // TODO: return a properly formatted XML error message
+        if (!metadigCtrl.getIsStarted()) {
+            log.error("Controller not started");
+            return Response.serverError().build();
+        }
 
-            // Create another input stream to pass to the controller
-            // ByteArrayInputStream sysmetaStream2 = new ByteArrayInputStream(streamData);
-            try {
-                DateTime requestDateTime = new DateTime();
-                String projectName = null;
-                String authTokenName = null;
-                String serviceUrl = null;
-                String formatFamily = null;
+        // Create another input stream to pass to the controller
+        // ByteArrayInputStream sysmetaStream2 = new ByteArrayInputStream(streamData);
+        try {
+            DateTime requestDateTime = new DateTime();
+            String projectName = null;
+            String authTokenName = null;
+            String subjectIdName = null;
+            String serviceUrl = null;
 
-                metadigCtrl.processScorerRequest(collectionId, projectName, authTokenName, nodeId, serviceUrl,
-                        formatFamily, suiteId, requestDateTime);
+            metadigCtrl.processScorerRequest(collectionId, projectName, authTokenName, subjectIdName, nodeId, serviceUrl,
+                    formatFamily, suiteId, requestDateTime);
 
-                log.info("Queued generation request of score file for collection id: " + collectionId + ", suiteId: " + suiteId
-                        + ", nodeid: " + nodeId);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return Response.serverError().entity(e).build();
-            }
+            log.info("Queued generation request of score file for collection id: " + collectionId + ", suiteId: " + suiteId + ", nodeId: " + nodeId);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Response.serverError().entity(e).build();
+        }
 
         return Response.ok().build();
     }
