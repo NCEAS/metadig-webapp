@@ -52,6 +52,15 @@ public class ScoresResource {
         log.info("Scores 'get' request. collection: " + collectionId + ", suite: " + suiteId + ", node: " + nodeId);
         MetadigFileStore filestore = null;
 
+        if(metadigCtrl == null) {
+            metadigCtrl = Controller.getInstance();
+            // Start the controller if it has not already been started.
+            if (!metadigCtrl.getIsStarted()) {
+                metadigCtrl.start();
+                log.info("started controller");
+            }
+        }
+
         try {
             filestore = new MetadigFileStore();
         } catch (Exception e) {
@@ -67,7 +76,7 @@ public class ScoresResource {
         }
 
         if(collectionId != null) {
-            mdFile.setCollectionId(collectionId);
+            mdFile.setPid(collectionId);
         }
 
         if(nodeId != null) {
@@ -141,16 +150,11 @@ public class ScoresResource {
             @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
 
-        log.info("Graph 'post' request. collection: " + collectionId + ", suite: " + suiteId);
+        log.info("Graph 'post' request. collection: " + collectionId + ", suite: " + suiteId + ", format: " + formatFamily + ", node: " + nodeId);
         String resultString = null;
-        // Copy the sysmeta input stream because we need to read it twice
-        //ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-        byte[] streamData = null;
 
         // If the request is identifying itself as 'high', then process it now, otherwise send it
         // to the processing queue.
-
         try {
             if(metadigCtrl == null) {
                 metadigCtrl = Controller.getInstance();
@@ -172,17 +176,9 @@ public class ScoresResource {
             return Response.serverError().build();
         }
 
-        // Create another input stream to pass to the controller
-        // ByteArrayInputStream sysmetaStream2 = new ByteArrayInputStream(streamData);
         try {
             DateTime requestDateTime = new DateTime();
-            String projectName = null;
-            String authTokenName = null;
-            String subjectIdName = null;
-            String serviceUrl = null;
-
-            metadigCtrl.processScorerRequest(collectionId, projectName, authTokenName, subjectIdName, nodeId, serviceUrl,
-                    formatFamily, suiteId, requestDateTime);
+            metadigCtrl.processScorerRequest(collectionId, nodeId, formatFamily, suiteId, requestDateTime);
 
             log.info("Queued generation request of score file for collection id: " + collectionId + ", suiteId: " + suiteId + ", nodeId: " + nodeId);
         } catch (Exception e) {
