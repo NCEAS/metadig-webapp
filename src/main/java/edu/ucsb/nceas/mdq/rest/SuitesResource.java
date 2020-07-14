@@ -15,7 +15,6 @@ import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
-import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.IOUtils;
@@ -35,27 +34,17 @@ import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.model.Suite;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
-import org.joda.time.DateTime;
 
-	/**
+/**
  * Root resource (exposed at "suites" path)
  */
 @Path("suites")
 public class SuitesResource {
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	
     private static Controller metadigCtrl = null;
 		
-	public SuitesResource() throws InternalServerErrorException {
-//	    try {
-//            //this.store = StoreFactory.getStore(persist);
-//            this.engine = new MDQEngine();
-//        } catch (MetadigException | IOException | ConfigurationException e) {
-//            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-//            throw(ise);
-//        }
-    }
+	public SuitesResource() {}
 	
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -76,6 +65,7 @@ public class SuitesResource {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
             throw(ise);
         }
+
     	Collection<String> suites = store.listSuites();
     	store.shutdown();
         return JsonMarshaller.toJson(suites);
@@ -96,6 +86,7 @@ public class SuitesResource {
             throw(ise);
         }
     	Suite suite = store.getSuite(id);
+        store.shutdown();
         return XmlMarshaller.toXml(suite, true);
     }
     
@@ -119,7 +110,9 @@ public class SuitesResource {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return false;
-		} 
+		} finally {
+		    store.shutdown();
+        }
         return true;
     }
     
@@ -144,7 +137,9 @@ public class SuitesResource {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return false;
-		} 
+		} finally {
+		    store.shutdown();
+        }
         return true;
     }
     
@@ -164,6 +159,7 @@ public class SuitesResource {
         }
     	Suite suite = store.getSuite(id);
     	store.deleteSuite(suite);
+    	store.shutdown();
         return true;
     }
     
@@ -236,6 +232,8 @@ public class SuitesResource {
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Response.serverError().entity(e).build();
+            } finally {
+                store.shutdown();
             }
 
             // determine the format of plot to return
