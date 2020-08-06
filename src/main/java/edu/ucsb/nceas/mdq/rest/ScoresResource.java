@@ -44,7 +44,7 @@ public class ScoresResource {
 
     @GET
     @Produces({ IMAGE_PNG, TEXT_CSV, MediaType.APPLICATION_JSON})
-    public Response getScores(@QueryParam("collection") String collectionId,
+    public Response getScores(@QueryParam("id") String collectionId, // The portal seriesId
                               @QueryParam("suite") String suiteId,
                               @QueryParam("node") String nodeId,
                               @Context Request r) {
@@ -102,11 +102,13 @@ public class ScoresResource {
             if (mt.equals(TEXT_CSV_TYPE)) {
                 // Return a CVS file with the statistics
                 mediaType = TEXT_CSV;
+                mdFile.setSuiteId(suiteId);
                 mdFile.setStorageType(StorageType.DATA.toString());
                 mdFile.setMediaType(mediaType);
             } else {
                 log.debug("Will return mediaType: " + IMAGE_PNG);
                 mediaType = IMAGE_PNG;
+                mdFile.setSuiteId(suiteId);
                 mdFile.setStorageType(StorageType.GRAPH.toString());
                 mdFile.setMediaType(mediaType);
             }
@@ -143,7 +145,7 @@ public class ScoresResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response run(
-            @QueryParam("collection") String collectionId, // id is the metadig suite id
+            @QueryParam("id") String collectionId,
             @QueryParam("suite") String suiteId,
             @QueryParam("format") String formatFamily,
             @QueryParam("node") String nodeId,
