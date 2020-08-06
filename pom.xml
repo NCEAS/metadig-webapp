@@ -6,7 +6,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- <docker.registry>docker.io</docker.registry> -->
         <docker.repo>metadig</docker.repo>
-        <docker.tag>2.3.0dev</docker.tag>
+        <docker.tag>2.3.0</docker.tag>
         <metadig-engine-version>2.3.0</metadig-engine-version>
     </properties>
 
