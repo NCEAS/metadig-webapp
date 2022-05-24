@@ -47,7 +47,7 @@ public class RootResource {
     	sb.append("<pre>"
     			+ ResourceDocumenter.inspectClass(RunsResource.class)
     			+ "</pre>");
-        sb.append("<p><a href='" + context + "scores'>Graph</a>");
+        sb.append("<p><a href='" + context + "scores'>Scores</a>");
         sb.append("<pre>"
             	+ ResourceDocumenter.inspectClass(ScoresResource.class)
             	+ "</pre>");

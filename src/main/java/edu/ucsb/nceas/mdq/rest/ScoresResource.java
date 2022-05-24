@@ -89,6 +89,7 @@ public class ScoresResource {
 
         File statsFile = null;
         String mediaType = null;
+        mdFile.setSuiteId(suiteId);
 
         // Return the statistics in the format (media type) requested from the HTML 'Accept' header
         String resultString = null;
@@ -102,13 +103,11 @@ public class ScoresResource {
             if (mt.equals(TEXT_CSV_TYPE)) {
                 // Return a CVS file with the statistics
                 mediaType = TEXT_CSV;
-                mdFile.setSuiteId(suiteId);
                 mdFile.setStorageType(StorageType.DATA.toString());
                 mdFile.setMediaType(mediaType);
             } else {
                 log.debug("Will return mediaType: " + IMAGE_PNG);
                 mediaType = IMAGE_PNG;
-                mdFile.setSuiteId(suiteId);
                 mdFile.setStorageType(StorageType.GRAPH.toString());
                 mdFile.setMediaType(mediaType);
             }
@@ -147,8 +146,8 @@ public class ScoresResource {
     public Response run(
             @QueryParam("id") String collectionId,
             @QueryParam("suite") String suiteId,
-            @QueryParam("format") String formatFamily,
             @QueryParam("node") String nodeId,
+            @QueryParam("format") String formatFamily,
             @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
 

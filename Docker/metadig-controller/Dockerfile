@@ -1,5 +1,5 @@
 #FROM tomcat:8.5
-FROM tomcat:8.5-alpine
+FROM tomcat:8-alpine
 
 MAINTAINER slaughter@nceas.ucsb.edu
 
@@ -10,12 +10,12 @@ MAINTAINER slaughter@nceas.ucsb.edu
 RUN mkdir -p /etc/dataone/index && touch /etc/dataone/index/d1client.properties && touch /etc/dataone/node.properties && touch /etc/dataone/index/cn-index-processor.properties
 
 # Add R runtime and install packages required by the quality suites
-COPY metadig_0.2.0.tar.gz ./metadig.tar.gz
-COPY ./r-cmds.txt r-cmds.txt
+#COPY metadig_0.2.0.tar.gz ./metadig.tar.gz
+#COPY ./r-cmds.txt r-cmds.txt
 RUN apk update
-RUN apk add g++ R R-dev R-doc libc-dev openssl-dev libxml2 libxml2-dev
-RUN echo 'options(repos = c(CRAN = "https://cran.cnr.berkeley.edu/"))' >> /usr/lib/R/etc/Rprofile.site
-RUN Rscript --vanilla r-cmds.txt
+#RUN apk add g++ R R-dev R-doc libc-dev openssl-dev libxml2 libxml2-dev
+#RUN echo 'options(repos = c(CRAN = "https://cran.cnr.berkeley.edu/"))' >> /usr/lib/R/etc/Rprofile.site
+#RUN Rscript --vanilla r-cmds.txt
 
 # add context to /usr/local/tomcat/webapps
 COPY ./server.xml /usr/local/tomcat/conf/server.xml
