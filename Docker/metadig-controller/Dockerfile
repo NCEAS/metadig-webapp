@@ -1,7 +1,13 @@
 #FROM tomcat:8.5
 FROM tomcat:8-alpine
 
-MAINTAINER slaughter@nceas.ucsb.edu
+LABEL org.opencontainers.image.source="https://github.com/nceas/metadig-webapp"
+LABEL org.opencontainers.image.title="metadig-webapp"
+LABEL org.opencontainers.image.version="2.4.0"
+LABEL maintainer="Jeanette Clark jclark@nceas.ucsb.edu"
+
+ARG TAG=2.0.0
+ENV TAG=${TAG}
 
 # metadig-webapp can process a quality report generation request directly, or queue it for
 # a metadig-worker (container) to process. If it has been requested that a quality report
