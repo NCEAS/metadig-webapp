@@ -7,7 +7,7 @@
         <!-- <docker.registry>docker.io</docker.registry> -->
         <docker.repo>metadig</docker.repo>
         <docker.tag>2.4.0</docker.tag>
-        <metadig-engine-version>2.4.1</metadig-engine-version>
+        <metadig-engine-version>2.4.0</metadig-engine-version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
