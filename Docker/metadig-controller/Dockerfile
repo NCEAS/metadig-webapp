@@ -2,7 +2,7 @@
 FROM tomcat:8-alpine
 
 LABEL org.opencontainers.image.source="https://github.com/nceas/metadig-webapp"
-LABEL org.opencontainers.image.title="metadig-webapp"
+LABEL org.opencontainers.image.title="metadig-controller"
 LABEL org.opencontainers.image.version="2.4.1"
 LABEL maintainer="Jeanette Clark jclark@nceas.ucsb.edu"
 
