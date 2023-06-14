@@ -6,7 +6,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- <docker.registry>docker.io</docker.registry> -->
         <docker.repo>metadig</docker.repo>
-        <docker.tag>2.4.0</docker.tag>
+        <docker.tag>2.4.1</docker.tag>
         <metadig-engine-version>2.4.1-SNAPSHOT</metadig-engine-version>
     </properties>
 
@@ -15,7 +15,7 @@
     <groupId>edu.ucsb.nceas</groupId>
     <artifactId>metadig-webapp</artifactId>
     <packaging>war</packaging>
-    <version>2.4.0</version>
+    <version>2.4.1-SNAPSHOT</version>
     <name>metadig-webapp</name>
 
     <repositories>
