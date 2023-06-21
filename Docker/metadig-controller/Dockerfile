@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.title="metadig-controller"
 LABEL org.opencontainers.image.version="1.0.1"
 LABEL maintainer="Jeanette Clark jclark@nceas.ucsb.edu"
 
-ARG TAG=2.0.0
-ENV TAG=${TAG}
+ARG ENGINE_TAG=2.0.0
+ENV ENGINE_TAG=${ENGINE_TAG}
 
 # metadig-webapp can process a quality report generation request directly, or queue it for
 # a metadig-worker (container) to process. If it has been requested that a quality report
@@ -22,7 +22,7 @@ COPY Docker/metadig-controller/server.xml /usr/local/tomcat/conf/server.xml
 # The most recently built war file is copied from the maven build directory to this dir, so that
 # it can be copyied to the image. The final war file is named 'quality.war' so that the tomcat
 # context will be 'quality', i.e. 'https://docker-ucsb-1.test.dataone.org:30080/quality'.
-COPY target/metadig-webapp-$TAG.war /usr/local/tomcat/webapps/quality.war
+COPY target/metadig-webapp-$ENGINE_TAG.war /usr/local/tomcat/webapps/quality.war
 
 # metadig-controller will send requests to tomcat port 8080
 EXPOSE 8080
