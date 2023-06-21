@@ -87,7 +87,7 @@ jobs:
         with:
           context: .
           file: Docker/metadig-controller/Dockerfile
-          build-args: TAG=${{needs.maven-build.outputs.version}}
+          build-args: TAG= ${{ steps.meta.outputs.labels['org.opencontainers.image.version'] }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
