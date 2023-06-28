@@ -6,7 +6,7 @@ This project builds a 'metadig-webapp.war' file that can be deployed in the Tomc
 The Docker container is also delivered to DockerHub that can be obtained with
 
 ```
-docker pull metadig/metadig-controller
+docker pull ghcr.io/nceas/metadig-controller
 ```
 
 ## The REST API
