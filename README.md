@@ -3,7 +3,7 @@ Web service for interacting with the [MetaDIG Engine](https://github.com/NCEAS/m
 
 This project builds a 'metadig-webapp.war' file that can be deployed in the Tomcat webapps directory. Depending on the Tomcat configuration, the war may be unpacked automatically each time a new version is copied in place.
 
-The Docker container is also delivered to DockerHub that can be obtained with
+The Docker container is also delivered to GHCR that can be obtained with
 
 ```
 docker pull ghcr.io/nceas/metadig-controller
