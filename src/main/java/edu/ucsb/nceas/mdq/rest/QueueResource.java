@@ -42,15 +42,15 @@ import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
  */
 @Path("queue")
 public class QueueResource {
-	
-	private Log log = LogFactory.getLog(this.getClass());
-	
-	private Controller controller = null;
-	
-	public QueueResource() {
+
+    private Log log = LogFactory.getLog(this.getClass());
+
+    private Controller controller = null;
+
+    public QueueResource() {
         this.controller = Controller.getInstance();
-	}
-    
+    }
+
     @GET
     @Path("status")
     @Produces(MediaType.TEXT_PLAIN)
@@ -58,7 +58,7 @@ public class QueueResource {
         log.debug("handling request to get queue status...");
         Boolean isStarted = false;
         isStarted = controller.getIsStarted();
-        if(isStarted) {
+        if (isStarted) {
             log.debug("The controller is running.");
             return "The controller is running.";
         } else {
@@ -77,22 +77,24 @@ public class QueueResource {
             controller = Controller.getInstance();
             /* First check if the controller has already been started */
             started = controller.getIsStarted();
-            if(started) return "controller already started";
+            if (started) {
+                return "controller already started";
+            }
             /* Controller hasn't been started yet, start it and check if success */
             controller.start();
             started = controller.getIsStarted();
-            if(started) {
+            if (started) {
                 return "controller started";
             } else {
                 return "controller not started";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //TODO: return properly formated XML 
+            // TODO: return properly formated XML
             return "controller not started";
         }
     }
-    
+
     @GET
     @Path("stop")
     @Produces(MediaType.TEXT_PLAIN)
@@ -103,14 +105,14 @@ public class QueueResource {
             controller = Controller.getInstance();
             controller.shutdown();
             started = controller.getIsStarted();
-            if(!started) {
+            if (!started) {
                 return "controller stopped";
             } else {
                 return "controller not stopped";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //TODO: return properly formated XML 
+            // TODO: return properly formated XML
             return "error: controller not stopped";
         }
     }
