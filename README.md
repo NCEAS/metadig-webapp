@@ -18,13 +18,13 @@ In the future, we will expose more administrative functions like modifying and a
 
 ### metadig-webapp
 
-The [`metadig-webapp` git repository](https://github.com/NCEAS/metadig-webapp) provides a REST API fronend to metadig-engine that can be deployed as a Tomcat servlet or Docker container.
+The [`metadig-webapp` git repository](https://github.com/NCEAS/metadig-webapp) provides a REST API front end to metadig-engine that can be deployed as a Tomcat servlet or Docker container.
 
 This repo builds the `metadig-webapp.war` file that can be run as a servlet inside a Tomcat instance. 
 
 Also built is the `metadig-controller` Docker container that includes a Tomcat instance that the `metadig-webapp` servlet runs in. This servlet implements the metadig REST API.
 
-The metadig-webapp is dependant on the metadig-engine jar file, which is provided by the metadig-engine build.
+The metadig-webapp is dependent on the metadig-engine jar file, which is provided by the metadig-engine build.
 
 In order to build metadig-webapp:
 - mvn clean
