@@ -7,7 +7,7 @@
         <!-- <docker.registry>docker.io</docker.registry> -->
         <docker.repo>metadig</docker.repo>
         <docker.tag>2.4.1</docker.tag>
-        <metadig-engine-version>2.4.1-SNAPSHOT</metadig-engine-version>
+        <metadig-engine-version>2.4.1</metadig-engine-version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,7 @@
     <groupId>edu.ucsb.nceas</groupId>
     <artifactId>metadig-webapp</artifactId>
     <packaging>war</packaging>
-    <version>2.4.1-SNAPSHOT</version>
+    <version>2.4.1</version>
     <name>metadig-webapp</name>
 
     <repositories>
