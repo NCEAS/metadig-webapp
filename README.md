@@ -9,7 +9,6 @@ The Docker container is also delivered to GHCR that can be obtained with
 docker pull ghcr.io/nceas/metadig-controller
 ```
 
-
 ## The REST API
 Typically, the API is used to:
 - list available/enabled checks and suites
