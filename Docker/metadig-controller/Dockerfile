@@ -15,8 +15,6 @@ ENV ENGINE_TAG=${ENGINE_TAG}
 # DataONE indexer prints copious error msgs if these files don't exist
 RUN mkdir -p /etc/dataone/index && touch /etc/dataone/index/d1client.properties && touch /etc/dataone/node.properties && touch /etc/dataone/index/cn-index-processor.properties
 
-RUN apk update
-
 # add context to /usr/local/tomcat/webapps
 COPY Docker/metadig-controller/server.xml /usr/local/tomcat/conf/server.xml
 # The most recently built war file is copied from the maven build directory to this dir, so that
