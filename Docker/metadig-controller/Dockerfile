@@ -1,5 +1,5 @@
 #FROM tomcat:8.5
-FROM eclipse-temurin:17.0.7_7-jre-jammy
+FROM tomcat:8-alpine
 
 LABEL org.opencontainers.image.source="https://github.com/nceas/metadig-webapp"
 LABEL org.opencontainers.image.title="metadig-controller"
