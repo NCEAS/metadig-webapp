@@ -4,3 +4,4 @@ target
 .idea/**
 *.iml
 .settings/
+Docker/metadig-controller/metadig-webapp.war
