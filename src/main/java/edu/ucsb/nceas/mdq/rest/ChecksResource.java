@@ -44,6 +44,7 @@ import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
+import edu.ucsb.nceas.mdqengine.dispatch.Dispatcher;
 
 /**
  * Root resource (exposed at "checks" path)
@@ -157,6 +158,7 @@ public class ChecksResource {
 			Check check = store.getCheck(id);
 			run = engine.runCheck(check, input, params, sysMeta);
 	    	store.createRun(run);
+			Dispatcher.getDispatcher("python").close();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return Response.serverError().entity(e).build();
