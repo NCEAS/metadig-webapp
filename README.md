@@ -58,4 +58,4 @@ Authorization for Docker Hub can be setup in several ways. One method is to crea
 </settings>
 ```
 
-The appropriate username and password is available from the NCEAS secure repo. 
+The appropriate username and password is available from the NCEAS secure repo.
