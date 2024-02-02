@@ -295,7 +295,7 @@ public class SuitesResource {
             }
         }
 
-        return Response.ok().build();
+        return Response.ok(resultString).build();
     }
 
 }
