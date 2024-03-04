@@ -21,7 +21,7 @@ public class MetadigContextListener implements ServletContextListener {
         try {
             Dispatcher.setupJep();
         }  catch (MetadigException e) {
-            log.error("Error setting up Jep. Python checks may not work.", e);
+            throw new RuntimeException("Error setting up Jep. Aborting startup.", e);
         }
 
             log.info("Metadig 'contextInitialized' called.");
@@ -35,7 +35,7 @@ public class MetadigContextListener implements ServletContextListener {
             try {
                 log.debug("Shutting down controller...");
                 controller.shutdown();
-                log.info("Controller shutdonw successfully.");
+                log.info("Controller shutdown successfully.");
             } catch (IOException | TimeoutException e) {
                 log.error("Error shutting down metadig controller.");
                 e.printStackTrace();

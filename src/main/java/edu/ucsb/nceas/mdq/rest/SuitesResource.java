@@ -90,6 +90,7 @@ public class SuitesResource {
 
     // @POST
     // @Consumes(MediaType.MULTIPART_FORM_DATA)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean createSuite(@FormDataParam("suite") InputStream xml) {
         boolean persist = true;
         MDQStore store = null;
@@ -117,6 +118,7 @@ public class SuitesResource {
     // @PUT
     // @Path("/{id}")
     // @Consumes(MediaType.MULTIPART_FORM_DATA)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean updateSuite(@PathParam("id") String id, @FormDataParam("suite") InputStream xml)
             throws JAXBException, IOException {
         boolean persist = true;
@@ -145,6 +147,7 @@ public class SuitesResource {
     // @DELETE
     // @Path("/{id}")
     // @Produces(MediaType.TEXT_PLAIN)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean deleteSuite(@PathParam("id") String id) {
         boolean persist = true;
         MDQStore store = null;
