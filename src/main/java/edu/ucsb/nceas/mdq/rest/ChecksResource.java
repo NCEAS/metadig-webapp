@@ -152,9 +152,6 @@ public class ChecksResource {
         }
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-//            params.putAll(formParams);
-//            params.remove("id");
-//            params.remove("document");
             Check check = store.getCheck(id);
             run = engine.runCheck(check, input, params, sysMeta);
             store.createRun(run);
