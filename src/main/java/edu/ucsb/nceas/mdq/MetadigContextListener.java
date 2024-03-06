@@ -35,7 +35,7 @@ public class MetadigContextListener implements ServletContextListener {
             try {
                 log.debug("Shutting down controller...");
                 controller.shutdown();
-                log.info("Controller shutdown successfully.");
+                log.info("Controller shut down successfully.");
             } catch (IOException | TimeoutException e) {
                 log.error("Error shutting down metadig controller.");
                 e.printStackTrace();
