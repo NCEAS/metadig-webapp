@@ -1,0 +1,1220 @@
+
+-----------BOUNDARY
+Content-Disposition: form-data; name="priority"
+Content-Type: text/plain
+
+high
+-----------BOUNDARY
+Content-Disposition: form-data; name="document"
+Content-Type: application/xml;charset=UTF-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2" packageId="urn:uuid:e99fc3fe-ab91-4784-954f-78efae175317" xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd" system="knb">
+  <dataset id="urn-uuid-eeef26de-c39f-4ea5-9f48-66a4a580c72a">
+    <title>Fairbanks sulfate isotope measurements during ALPACA (2022）</title>
+    <creator id="5577616012795428">
+      <individualName>
+        <givenName>Allison</givenName>
+        <surName>Moon</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Graduate Student</positionName>
+      <electronicMailAddress>allimoon@uw.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0002-1648-4869</userId>
+    </creator>
+    <creator id="9810104129539144">
+      <individualName>
+        <givenName>Ursula</givenName>
+        <surName>Jongebloed</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="6035078132627558">
+      <individualName>
+        <givenName>Kayane</givenName>
+        <surName>Dingilian</surName>
+      </individualName>
+      <organizationName>– School of Earth and Atmospheric Sciences, Georgia Institute of Technology, Atlanta</organizationName>
+      <positionName>Postdoctoral researcher</positionName>
+    </creator>
+    <creator id="2509227913660754">
+      <individualName>
+        <givenName>Andrew</givenName>
+        <surName>Schauer</surName>
+      </individualName>
+      <organizationName>Department of Earth and Space Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Research Scientist</positionName>
+    </creator>
+    <creator id="7988470254485484">
+      <individualName>
+        <givenName>Yuk-Chun</givenName>
+        <surName>Chan</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="2126804372966289">
+      <individualName>
+        <givenName>Meeta</givenName>
+        <surName>Cesler-Maloney</surName>
+      </individualName>
+      <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="1034377228576885">
+      <individualName>
+        <givenName>William</givenName>
+        <surName>Simpson</surName>
+      </individualName>
+      <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="8955120544968685">
+      <individualName>
+        <givenName>Rodney</givenName>
+        <surName>Weber</surName>
+      </individualName>
+      <organizationName>– School of Earth and Atmospheric Sciences, Georgia Institute of Technology, Atlanta</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="1040973305847119">
+      <individualName>
+        <givenName>Ling</givenName>
+        <surName>Tsiang</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Undergraduate Student</positionName>
+    </creator>
+    <creator id="6085081466507571">
+      <individualName>
+        <givenName>Fouad</givenName>
+        <surName>Yazbeck</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Undergraduate Student</positionName>
+    </creator>
+    <creator id="1801382393308864">
+      <individualName>
+        <givenName>Shuting</givenName>
+        <surName>Zhai</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="7339234920330316">
+      <individualName>
+        <givenName>Alanna</givenName>
+        <surName>Wedum</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Undergraduate Student</positionName>
+    </creator>
+    <creator id="7485522502074971">
+      <individualName>
+        <givenName>Alexander</givenName>
+        <surName>Turner</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="1076115786106158">
+      <individualName>
+        <givenName>Sarah</givenName>
+        <surName>Albertin</surName>
+      </individualName>
+      <organizationName>IGE, Univ. Grenoble Alpes, CNRS, INRAE, IRD</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="1751686592001783">
+      <individualName>
+        <givenName>Slimane</givenName>
+        <surName>Bekki</surName>
+      </individualName>
+      <organizationName>– LATMOS/IPSL, Sorbonne Université, UVSQ, CNRS</organizationName>
+      <positionName>Research Scientist</positionName>
+    </creator>
+    <creator id="9901809602263744">
+      <individualName>
+        <givenName>Joël</givenName>
+        <surName>Savarino</surName>
+      </individualName>
+      <organizationName>IGE, Univ. Grenoble Alpes, CNRS, INRAE, IRD</organizationName>
+      <positionName>Senior Scientist</positionName>
+    </creator>
+    <creator id="1187646190226682">
+      <individualName>
+        <givenName>Konstantin</givenName>
+        <surName>Gribanov</surName>
+      </individualName>
+      <organizationName>Climate and Environment Physics Laboratory, Ural Federal University</organizationName>
+      <positionName>Senior Researcher</positionName>
+    </creator>
+    <creator id="4122690635826467">
+      <individualName>
+        <givenName>Kerri</givenName>
+        <surName>Pratt</surName>
+      </individualName>
+      <organizationName>Department of Chemistry, University of Michigan, Ann Arbor</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="4033957173137986">
+      <individualName>
+        <givenName>Emily</givenName>
+        <surName>Costa</surName>
+      </individualName>
+      <organizationName>Department of Chemistry, University of Michigan, Ann Arbor</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="7335338778793607">
+      <individualName>
+        <givenName>Cort</givenName>
+        <surName>Anastasio</surName>
+      </individualName>
+      <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="3383507094968996">
+      <individualName>
+        <givenName>Michael</givenName>
+        <surName>Sunday</surName>
+      </individualName>
+      <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+      <positionName>Postdoctoral researcher</positionName>
+    </creator>
+    <creator id="8835451536752656">
+      <individualName>
+        <givenName>Laura</givenName>
+        <surName>Heinlein</surName>
+      </individualName>
+      <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+      <positionName>Graduate Student</positionName>
+    </creator>
+    <creator id="3473139252096132">
+      <individualName>
+        <givenName>Jingqiu</givenName>
+        <surName>Mao</surName>
+      </individualName>
+      <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+      <positionName>Professor</positionName>
+    </creator>
+    <creator id="2714628568104578">
+      <individualName>
+        <givenName>Becky</givenName>
+        <surName>Alexander</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Professor</positionName>
+      <electronicMailAddress>beckya@uw.edu</electronicMailAddress>
+    </creator>
+    <pubDate>2023</pubDate>
+    <abstract>
+      <para>Within and surrounding high-latitude cities, poor air quality disturbs Arctic ecosystems, influences climate, and harms human health. The Fairbanks North Star Borough has wintertime particulate matter (PM) concentrations that exceed the Environmental Protection Agency’s (EPA) threshold for public health. Particulate sulfate (SO42-) is the most abundant inorganic species and contributes approximately 20% of the total PM mass in Fairbanks, but air quality models underestimate observed sulfate concentrations. Here we quantify sulfate sources using size-resolved δ34S(SO42-), δ18O(SO42-), and Δ17O(SO42-) of particulate sulfate in Fairbanks from January 18th to February 25th, 2022 using a Bayesian isotope mixing model. </para>
+      <para>This data contains sulfur and oxygen isotope measurements for size-resolved filter samples collected during the Alaskan Layered Pollution and Chemical Analysis field campaign in 2022. Ambient concentrations of SO2, HMS, non-HMS S(IV), SO4, and the sulfur oxidation ratio are also included. Finally, the median fractional contributions of each oxidation pathway calculated in the Bayesian isotope mixing model are included with their 95% confidence interval.</para>
+    </abstract>
+    <keywordSet>
+      <keyword>sulfate</keyword>
+      <keyword>isotope</keyword>
+      <keyword>aerosol</keyword>
+      <keyword>air quality</keyword>
+      <keyword>haze</keyword>
+      <keyword>ALPACA</keyword>
+      <keyword>Fairbanks</keyword>
+      <keyword>Alaska</keyword>
+      <keywordThesaurus>None</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <para>This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.</para>
+    </intellectualRights>
+    <coverage>
+      <geographicCoverage>
+        <geographicDescription>Community Technical College in downtown Fairbanks</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-147.4919</westBoundingCoordinate>
+          <eastBoundingCoordinate>-147.4919</eastBoundingCoordinate>
+          <northBoundingCoordinate>65.1256</northBoundingCoordinate>
+          <southBoundingCoordinate>65.1256</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2022-01-18</calendarDate>
+            <time>09:00:00</time>
+          </beginDate>
+          <endDate>
+            <calendarDate>2022-02-25</calendarDate>
+            <time>09:00:00</time>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <annotation>
+      <propertyURI label="theme">http://www.w3.org/ns/dcat#theme</propertyURI>
+      <valueURI label="Chemistry">https://purl.dataone.org/odo/ADCAD_00034</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="theme">http://www.w3.org/ns/dcat#theme</propertyURI>
+      <valueURI label="Atmospheric Science">https://purl.dataone.org/odo/ADCAD_00039</valueURI>
+    </annotation>
+    <annotation>
+      <propertyURI label="Data Sensitivity Category">http://purl.dataone.org/odo/SENSO_00000005</propertyURI>
+      <valueURI label="Non-sensitive data">http://purl.dataone.org/odo/SENSO_00000002</valueURI>
+    </annotation>
+    <contact id="9890867932805236">
+      <individualName>
+        <givenName>Allison</givenName>
+        <surName>Moon</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Graduate Student</positionName>
+      <electronicMailAddress>allimoon@uw.edu</electronicMailAddress>
+      <userId directory="https://orcid.org">https://orcid.org/0000-0002-1648-4869</userId>
+    </contact>
+    <contact id="5555059639363836">
+      <individualName>
+        <givenName>Becky</givenName>
+        <surName>Alexander</surName>
+      </individualName>
+      <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+      <positionName>Professor</positionName>
+      <electronicMailAddress>beckya@uw.edu</electronicMailAddress>
+    </contact>
+    <publisher id="6370212563951622">
+      <organizationName>NSF Arctic Data Center</organizationName>
+      <electronicMailAddress>support@arcticdata.io</electronicMailAddress>
+      <onlineUrl>http://arcticdata.io</onlineUrl>
+      <userId directory="unknown">Q77285095</userId>
+    </publisher>
+    <methods>
+      <methodStep>
+        <description>
+          <section>
+            <title>Ethical Research Practices</title>
+            <para>Collection of this data did not involve human subjects or animals. Throughout the field campaign, Fairbanks town hall meetings were held to communicate the research being done during ALPACA with the community. These results will be publically available both through peer-reviewed publications and community outreach materials.</para>
+          </section>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>A Volumetric Flow Controlled Particulate Sampling System (TE-5170) with a 4-stage cascade impactor (TE-230) was used to collect 24-hr size-resolved aerosol samples at Fairbanks Community Technical College (CTC) (64.84064°N, 147.72677°W) between January 17th to February 25th, 2022. Size-resolved bins were determined by calculating the particle size cut-off (Dp,50) at 50% collection efficiency using the corrected flow rate in each sample. Two filter samples were collected for one week each at the Poker Flat Research range (65.1256° N, 147.4919° W), a relatively clean site 46 km north of Fairbanks, to represent a two-week average of background sulfate. Atmospheric particles were collected using a high-volume sampler (Digitel, DH77, TSP inlet, 1 m3 min-1) on pre-combusted quartz filters (Whatman 150nm-diameter).</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>https://google.com Isotope samples were prepared for silver salt pyrolysis as described in Schauer et al. and Geng et al.54,55 Briefly, the filtrate was neutralized by converting anions to sodium-form with an offline cation exchange resin (AG 50W-X8 Resin from Bio-Rad). This converts sulfuric acid (H2SO4) to sodium sulfate (Na2SO4), which prevents sample loss due to evaporation. This step is followed by the removal of soluble organics by adding 30% H2O2 and drying in a MiVAc Duo concentrator. Sulfate was separated from other ions in the sample matrix in a Dionex ICS-2000 before being converted to Ag2SO4 using Ag+-charged cation-exchange resin as described in Geng et al.</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>Oxygen isotope measurements were performed on a Finnegan MAT253 isotope ratio mass spectrometer using the same configuration as Geng et al.55 Oxygen isotope measurements were corrected for isotopic exchange with quartz and conversion of HMS and non-HMS S(IV) to sulfate during sample preparation (see supplement section 1.4.1). Sulfur isotope composition was measured using a separate Finnegan MAT253 isotope ratio mass spectrometer with the same configuration as Jongebloed et al.56 δ34S values were normalized to the Vienna Canyon Diablo Troilite (VCDT) scale using four in-house reference materials that are regularly calibrated against the international reference materials IAEA-S-1, IAEA-S-3, and NBS-127. A sulfur isotope correction for sulfate formed from HMS and S(IV) during sample processing was estimated as described in section 1.4.2. The δ34S composition of Fairbanks fuel oils #1 and #2 aquired during winter 2022 was measured by combusting 6 μL of fuel oil in a 50 μL tin capsule packed with tin powder. A source signature for δ34Semission was calculated using the δ34S measurements for fuel oil #1 (+3.7±0.6‰) and fuel oil #2 (+4.9±0.1‰) and weighing the values by sulfur content (896 and 2,053 ppmv, respectively) and domestic use (33% and 67%, respectively) (Table S4)19. This yielded a δ34Semission signature of +4.7 (±0.6)‰. The analytical error of the measurements (±0.8‰, ±0.2‰, and ±1.0‰ for δ18O, Δ17O, and δ34S, respectively) was estimated from duplicate sample analysis (performed on 30% of the Fairbanks samples) and replicate measurements of standards in quartz and silver capsules. The fully propagated error including isotopic corrections for the three measurements are: δ18O (±1.9‰), Δ17O (±0.4‰), and δ34S (±1.2‰).</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>We developed an isotope mixing model to investigate the contributions of primary sulfate and five secondary sulfate formation pathways (H2O2, O3, TMI-O2, OH, and NO2). The model inputs are the δ18O(SO42−), Δ17O(SO42−), and δ34S(SO42−) observations. We assumed the observed δ18O(SO42−), Δ17O(SO42−), and δ34S(SO42−) follow a multivariate Gaussian distribution. We used a Dirichlet distribution as the prior for the fractional contributions such that each fraction is in the interval [0,1] and all fractions sum to 1. Markov Chain Monte Carlo was used to calculate the fractional contributions of each sulfate formation pathway for each sample and estimate the uncertainty by providing a 95% confidence interval.</para>
+        </description>
+      </methodStep>
+      <methodStep>
+        <description>
+          <para>Schauer, A. J., Kunasek, S. A., Sofen, E. D., Erbland, J., Savarino, J., Johnson, B. W., Amos, H. M., Shaheen, R., Abaunza, M., Jackson, T. L., Thiemens, M. H., &amp;amp;amp; Alexander, B. (2012). Oxygen isotope exchange with quartz during pyrolysis of silver sulfate and silver nitrate: Oxygen isotope exchange during pyrolysis of Ag 2 SO 4 and AgNO 3. Rapid Communications in Mass Spectrometry, 26(18), 2151–2157. https://doi.org/10.1002/rcm.6332</para>
+          <para>Geng, L., Schauer, A. J., Kunasek, S. A., Sofen, E. D., Erbland, J., Savarino, J., Allman, D. J., Sletten, R. S., &amp;amp;amp; Alexander, B. (2013). Analysis of oxygen-17 excess of nitrate and sulfate at sub-micromole levels using the pyrolysis method: Analysis of oxygen-17 excess of nitrate and sulfate. Rapid Communications in Mass Spectrometry, 27(21), 2411–2419. https://doi.org/10.1002/rcm.6703</para>
+        </description>
+      </methodStep>
+      <sampling>
+        <studyExtent>
+          <description>
+            <para>A Volumetric Flow Controlled Particulate Sampling System (TE-5170) with a 4-stage cascade impactor (TE-230) was used to collect 24-hr size-resolved aerosol samples at Fairbanks Community Technical College (CTC) (64.84064°N, 147.72677°W) between January 17th to February 25th, 2022. Size-resolved bins were determined by calculating the particle size cut-off (Dp,50) at 50% collection efficiency using the corrected flow rate in each sample (equation S1 in the Supporting Information). For each collection period, filters were combined to form three-size bins: particle diameters &amp;amp;amp;lt; 0.7 μm (PM&amp;amp;amp;lt;0.7), 0.7-2.5 μm (PM0.7-2.5), and 2.5-10 μm (PM2.5-10). Both PM0.7 and PM0.7-2.5 fall within the EPA-regulated fine particle range deemed PM2.5, but are analyzed in separate size bins here. Filter samples were collected daily between 9:30 AM to 9:00 AM the following day except for one exceptionally polluted period between January 31st to February 3rd when the filters were changed twice per day at approximately 9:30 AM and 5 PM local time.</para>
+          </description>
+        </studyExtent>
+        <samplingDescription>
+          <para>No sampling description provided.</para>
+        </samplingDescription>
+      </sampling>
+    </methods>
+    <project>
+      <title>Fairbanks sulfate isotope measurements during ALPACA</title>
+      <personnel id="7267236454015309">
+        <individualName>
+          <givenName>Allison</givenName>
+          <surName>Moon</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="9033459658859112">
+        <individualName>
+          <givenName>Ursula</givenName>
+          <surName>Jongebloed</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="6924382744272954">
+        <individualName>
+          <givenName>Kayane</givenName>
+          <surName>Dingilian</surName>
+        </individualName>
+        <organizationName>– School of Earth and Atmospheric Sciences, Georgia Institute of Technology, Atlanta</organizationName>
+        <positionName>Postdoctoral researcher</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="6965516119283135">
+        <individualName>
+          <givenName>Andrew</givenName>
+          <surName>Schauer</surName>
+        </individualName>
+        <organizationName>Department of Earth and Space Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Research Scientist</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="1193369309231981">
+        <individualName>
+          <givenName>Yuk-Chun</givenName>
+          <surName>Chan</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="7181409798968856">
+        <individualName>
+          <givenName>Meeta</givenName>
+          <surName>Cesler-Maloney</surName>
+        </individualName>
+        <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="6343052376729101">
+        <individualName>
+          <givenName>William</givenName>
+          <surName>Simpson</surName>
+        </individualName>
+        <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="7792727631389464">
+        <individualName>
+          <givenName>Rodney</givenName>
+          <surName>Weber</surName>
+        </individualName>
+        <organizationName>– School of Earth and Atmospheric Sciences, Georgia Institute of Technology, Atlanta</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="8563582415936769">
+        <individualName>
+          <givenName>Ling</givenName>
+          <surName>Tsiang</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Undergraduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="7614681563273723">
+        <individualName>
+          <givenName>Fouad</givenName>
+          <surName>Yazbeck</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Undergraduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="4499705391896495">
+        <individualName>
+          <givenName>Shuting</givenName>
+          <surName>Zhai</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="8339041564577739">
+        <individualName>
+          <givenName>Alanna</givenName>
+          <surName>Wedum</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Undergraduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="9446218828613352">
+        <individualName>
+          <givenName>Alexander</givenName>
+          <surName>Turner</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="2488945052419907">
+        <individualName>
+          <givenName>Sarah</givenName>
+          <surName>Albertin</surName>
+        </individualName>
+        <organizationName>IGE, Univ. Grenoble Alpes, CNRS, INRAE, IRD</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="8419929695495992">
+        <individualName>
+          <givenName>Slimane</givenName>
+          <surName>Bekki</surName>
+        </individualName>
+        <organizationName>– LATMOS/IPSL, Sorbonne Université, UVSQ, CNRS</organizationName>
+        <positionName>Research Scientist</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="7311449973029297">
+        <individualName>
+          <givenName>Joël</givenName>
+          <surName>Savarino</surName>
+        </individualName>
+        <organizationName>IGE, Univ. Grenoble Alpes, CNRS, INRAE, IRD</organizationName>
+        <positionName>Senior Scientist</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="3475704718349167">
+        <individualName>
+          <givenName>Konstantin</givenName>
+          <surName>Gribanov</surName>
+        </individualName>
+        <organizationName>Climate and Environment Physics Laboratory, Ural Federal University</organizationName>
+        <positionName>Senior Researcher</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="5264539879606467">
+        <individualName>
+          <givenName>Kerri</givenName>
+          <surName>Pratt</surName>
+        </individualName>
+        <organizationName>Department of Chemistry, University of Michigan, Ann Arbor</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="9933016558156728">
+        <individualName>
+          <givenName>Emily</givenName>
+          <surName>Costa</surName>
+        </individualName>
+        <organizationName>Department of Chemistry, University of Michigan, Ann Arbor</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="2846424565514127">
+        <individualName>
+          <givenName>Cort</givenName>
+          <surName>Anastasio</surName>
+        </individualName>
+        <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="8655134589303196">
+        <individualName>
+          <givenName>Michael</givenName>
+          <surName>Sunday</surName>
+        </individualName>
+        <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+        <positionName>Postdoctoral researcher</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="4754977723132944">
+        <individualName>
+          <givenName>Laura</givenName>
+          <surName>Heinlein</surName>
+        </individualName>
+        <organizationName>- Department of Land, Air, &amp; Water Resources, University of California, Davis</organizationName>
+        <positionName>Graduate Student</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="3976459004646366">
+        <individualName>
+          <givenName>Jingqiu</givenName>
+          <surName>Mao</surName>
+        </individualName>
+        <organizationName>Department of Chemistry, Biochemistry, and Geophysical Institute, University of Alaska Fairbanks</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <personnel id="6681720411140148">
+        <individualName>
+          <givenName>Becky</givenName>
+          <surName>Alexander</surName>
+        </individualName>
+        <organizationName>Department of Atmospheric Sciences, University of Washington, Seattle</organizationName>
+        <positionName>Professor</positionName>
+        <role>principalInvestigator</role>
+      </personnel>
+      <award>
+        <funderName>The National Oceanic and Atmospheric Administration (OAR)in the  AC4 - Urban atmosphere in a warming climate: chemistry, carbon and composition division.</funderName>
+        <awardNumber>0124733</awardNumber>
+        <title>Fairbanks sulfate isotope measurements during ALPACA</title>
+      </award>
+    </project>
+    <dataTable id="urn-uuid-3a6f9c5e-3c7b-4ada-819e-e00ec19053cb">
+      <entityName>Moon_et_al_isotope_data.csv</entityName>
+      <entityDescription>Isotope data</entityDescription>
+      <physical>
+        <objectName>Moon_et_al_isotope_data.csv</objectName>
+        <size unit="bytes">44286</size>
+        <authentication method="MD5">629095bed85261d7587fbb79c24d98d7</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>
+</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+        <distribution>
+          <online>
+            <url function="download">https://cn.dataone.org/cn/v2/resolve/urn:uuid:3a6f9c5e-3c7b-4ada-819e-e00ec19053cb</url>
+          </online>
+        </distribution>
+      </physical>
+      <attributeList>
+        <attribute id="ygG79FDxz2DOJoTVsOvP9JrAZAN3OX">
+          <attributeName>Date</attributeName>
+          <attributeDefinition>Date of measurement. Multiple date format included.</attributeDefinition>
+          <measurementScale>
+            <dateTime>
+              <formatString>DD/MM  and PM period</formatString>
+            </dateTime>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="date and time of measurement">http://purl.dataone.org/odo/ECSO_00002043</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="GrNX00lsmoFUo1T0C3EmqNOtV7oke1">
+          <attributeName>δ34S(‰)</attributeName>
+          <attributeDefinition>δ34 S is calculated using the ratio of 34S/32S in the sample over the ratio of Vienna Canyon Diablo Troilite (VCDT). The unit is permille (‰).</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>permil</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="Zs03kgGVKF6hp0CQNH7TKvWlsWBrKy">
+          <attributeName>δ18O(‰)</attributeName>
+          <attributeDefinition>δ18 O  is calculated using the ratio of 18O/16O compared to the ratio found in Vienna Standard Mean Ocean water (VSMOW). The unit is permille (‰).</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>permil</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="d18O">http://purl.dataone.org/odo/ECSO_00001677</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="22nL1viDdEOURw7ZDB71SfEBN8hr2W">
+          <attributeName>Δ17O(‰)</attributeName>
+          <attributeDefinition>∆17 O   is calculated using the following equation: 
+∆17 O(SO4)= δ17 O(SO4 )-0.52∙(δ18 O(SO4)) 
+where d17O is calculated using the ratio of 17O/16O compared to the ratio found in Vienna Standard Mean Ocean water (VSMOW). The unit is permille (‰).</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>permil</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute id="MDu6ARt0SyFmapRzN856m4NZF72NRg">
+          <attributeName>SO2 (umol/m3)</attributeName>
+          <attributeDefinition>Ambient concentrations of Sulfur dioxide in umol/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>millimolePerMeterCubed</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="mole concentration">http://purl.dataone.org/odo/ECSO_00000662</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="aKXsZro3aPSGpSPtJMDTqs5XW8QSLo">
+          <attributeName>SOR (SO4/SO2+SO4+HMS+non-HMS SIV)</attributeName>
+          <attributeDefinition>SOR is the sulfur oxidation ratio. It's the molar concentration of SO4 over the molar concentrations of SO2, HMS, non-HMS S(IV), and SO4.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute id="llKFB3MscEshEnxMwDmPBSuJfRdbce">
+          <attributeName>SO4_PM0.7_ug/m3</attributeName>
+          <attributeDefinition>The measurement of particulate matter 0.7 of Sulfate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="sulfate concentration">http://purl.dataone.org/odo/ECSO_00002156</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="kMAQxsLqEIKJLb76OswZyWT1uyd0Vn">
+          <attributeName>SO4_PM0.7-2.5_ug/m3</attributeName>
+          <attributeDefinition>The measurement of particulate matter 0.7 - 2.5 of Sulfate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="sulfate concentration">http://purl.dataone.org/odo/ECSO_00002156</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="z70s0v6vNMxz5MVLO0F6SL8U1Jrk2F">
+          <attributeName>SO4_PM2.5-PM10_ug/m3</attributeName>
+          <attributeDefinition>The measurement of particulate matter 2.5 - 10 of Sulfate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="sulfate concentration">http://purl.dataone.org/odo/ECSO_00002156</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="tKc1eLWwEtGVrKZ19UKgrue50nxrK7">
+          <attributeName>Non-HMS_SIV_PM0.7_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 0.7 non- hydroxymethanesulfonate S(IV) in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="FtueS7UHiCAix87RpVcCcTgiR3hWKa">
+          <attributeName>Non-HMS_SIV_PM0.7-2.5_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 0.7-2.5 non- hydroxymethanesulfonate S(IV) in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="U7styHK9bMI7S1TLZNIN6xOVTFPKEJ">
+          <attributeName>Non-HMS_SIV_PM2.5-PM10_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 2.5-10 non- hydroxymethanesulfonate S(IV) in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="kKdtskNiZzHIl6PbG7KlNl8Nx3XaXI">
+          <attributeName>HMS_PM0.7_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 0.7 hydroxymethanesulfonate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="hp1623ORMiLHomB7TVTnArMo6wTfg3">
+          <attributeName>HMS_PM0.7-2.5_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 0.7-2.5 hydroxymethanesulfonate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="qDhiBkkgmyv14ToHhPHwHAeqB79bkR">
+          <attributeName>HMS_PM2.5-PM10_ug/m3</attributeName>
+          <attributeDefinition>The concentration of PM 2.5-10 hydroxymethanesulfonate in ug/m3.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>microgramPerMeterCubed</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="Concentration Measurement Type">http://purl.dataone.org/odo/ECSO_00000512</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="XNmm6JxuFedl3kJ0lzgiAFIOsPiTgc">
+          <attributeName>primary_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the primary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="zxWuThzyoZKnBiUde2lyxyfSNKdKKs">
+          <attributeName>OH_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the OH secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="o1NLNhcV3ZMb2xzcWF4EP2tdMGExsn">
+          <attributeName>H2O2_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the H2O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="TFBT3vV4sdoNuMBdgewok6xBTtLprl">
+          <attributeName>TMI_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the TMI-O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="U1wTwD5TTE3yPOOaC15AQEcR5BpqVx">
+          <attributeName>O3_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the O3 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="OCMWTQpBexWDQAAUnAK81qXCU8Tuy7">
+          <attributeName>NO2_median_fraction</attributeName>
+          <attributeDefinition>The median percentage of total sulfate from the NO2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="OtXfgazCtMZrviFDiuR6AGiigBpIRd">
+          <attributeName>primary_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the primary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="o9mFJv1EBDq5mdWDQI4vTkv8cD7cft">
+          <attributeName>OH_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the OH secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="cvlgNPd305gkcW40GTakcpQZJxS8hi">
+          <attributeName>H2O2_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the H2O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="LgTVx24g46bTuwDZDB30ct6xOBEqzI">
+          <attributeName>TMI_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the TMI-O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="CBonem9T2a7dOPs6TsqakiauplMsuf">
+          <attributeName>O3_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the O3 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="0ALX9sTy86nHJDyRdsTbI24LDD4eyD">
+          <attributeName>NO2_97.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 97.5 percentile percentage of total sulfate from the NO2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="70C5Xpff1l2pmxb2BVcDnxR6Tl9bSh">
+          <attributeName>primary_2.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the primary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="uPsswGqP6Z3t23o2nCdPCkGHc36ii7">
+          <attributeName>OH2.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the OH secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="3Uz7Tu7s2aTle0NNPtfHTtbzlDKKlB">
+          <attributeName>H2O22.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the H2O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="1Ml1spLNDdZOeKPzJOmEZ5yWRKGpVc">
+          <attributeName>TMI2.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the TMI-O2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="ldn7HouSsI9EyB8g5QCURhZzFnLu5E">
+          <attributeName>O32.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the O3 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+        <attribute id="Z8XmW8qieInEuhcr5QBTxqsauQ1kvD">
+          <attributeName>NO2_2.5th_percentile_fraction</attributeName>
+          <attributeDefinition>The 2.5 percentile percentage of total sulfate from the NO2 secondary sulfate formation pathway.</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <annotation>
+            <propertyURI label="contains measurements of type">http://ecoinformatics.org/oboe/oboe.1.2/oboe-core.owl#containsMeasurementsOfType</propertyURI>
+            <valueURI label="ratio measurement type">http://purl.dataone.org/odo/ECSO_00000629</valueURI>
+          </annotation>
+        </attribute>
+      </attributeList>
+    </dataTable>
+  </dataset>
+  <additionalMetadata>
+    <metadata>
+      <unitList>
+        <unit id="microgramPerMeterCubed" abbreviation="µg/m^3" multiplierToSI="0.000001" name="microgramPerMeterCubed" parentSI="gramPerMeterCubed" unitType="massDensity">
+          <description>microgram per meter cubed</description>
+        </unit>
+      </unitList>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>
+-----------BOUNDARY
+Content-Disposition: form-data; name="systemMetadata"
+Content-Type: application/xml;charset=UTF-8
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:systemMetadata xmlns:ns2="http://ns.dataone.org/service/types/v1" xmlns:ns3="http://ns.dataone.org/service/types/v2.0">
+    <serialVersion>0</serialVersion>
+    <identifier>urn:uuid:6a04c674-61ba-4a36-bdc0-5585f1fce2d0</identifier>
+    <formatId>https://eml.ecoinformatics.org/eml-2.2.0</formatId>
+    <size>61569</size>
+    <checksum algorithm="MD5">881bf599ca27fbf538444830408e0eab</checksum>
+    <submitter>http://orcid.org/0000-0003-4703-1974</submitter>
+    <rightsHolder>http://orcid.org/0000-0002-1648-4869</rightsHolder>
+    <accessPolicy>
+        <allow>
+            <subject>http://orcid.org/0000-0003-4703-1974</subject>
+            <permission>read</permission>
+            <permission>write</permission>
+            <permission>changePermission</permission>
+        </allow>
+        <allow>
+            <subject>CN=arctic-data-admins,DC=dataone,DC=org</subject>
+            <permission>read</permission>
+            <permission>write</permission>
+            <permission>changePermission</permission>
+        </allow>
+        <allow>
+            <subject>public</subject>
+            <permission>read</permission>
+        </allow>
+    </accessPolicy>
+    <replicationPolicy replicationAllowed="false" numberReplicas="0"/>
+    <archived>false</archived>
+    <dateUploaded>2023-11-22T20:51:11.883+00:00</dateUploaded>
+    <dateSysMetadataModified>2023-11-22T20:51:11.883+00:00</dateSysMetadataModified>
+    <originMemberNode>urn:node:mnTestARCTIC</originMemberNode>
+    <authoritativeMemberNode>urn:node:mnTestARCTIC</authoritativeMemberNode>
+    <fileName>Fairbanks_sulfate_isotope_measurements_during_ALPA.xml</fileName>
+</ns3:systemMetadata>
+-----------BOUNDARY--
+

@@ -7,15 +7,24 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+import edu.ucsb.nceas.mdqengine.dispatch.Dispatcher;
 import edu.ucsb.nceas.mdqengine.Controller;
+import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 
+@WebListener
 public class MetadigContextListener implements ServletContextListener {
 
     public static Log log = LogFactory.getLog(MetadigContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-            log.debug("Metadig 'contextInitialized' called.");
+        try {
+            Dispatcher.setupJep();
+        }  catch (MetadigException e) {
+            throw new RuntimeException("Error setting up Jep. Aborting startup.", e);
+        }
+
+            log.info("Metadig 'contextInitialized' called.");
     }
 
     @Override
@@ -26,7 +35,7 @@ public class MetadigContextListener implements ServletContextListener {
             try {
                 log.debug("Shutting down controller...");
                 controller.shutdown();
-                log.info("Controller shutdonw successfully.");
+                log.info("Controller shut down successfully.");
             } catch (IOException | TimeoutException e) {
                 log.error("Error shutting down metadig controller.");
                 e.printStackTrace();
