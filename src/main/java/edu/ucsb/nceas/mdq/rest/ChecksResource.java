@@ -18,16 +18,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.xml.bind.JAXBException;
 
-import com.hp.hpl.jena.shared.ConfigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
-import net.sf.saxon.functions.ConstantFunction;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -44,31 +41,32 @@ import edu.ucsb.nceas.mdqengine.model.Run;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
 import edu.ucsb.nceas.mdqengine.serialize.JsonMarshaller;
 import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
+import edu.ucsb.nceas.mdqengine.dispatch.Dispatcher;
 
 /**
  * Root resource (exposed at "checks" path)
  */
 @Path("checks")
 public class ChecksResource {
-	
-	private Log log = LogFactory.getLog(this.getClass());
-	
-	private MDQStore store = null;
-	
-	private MDQEngine engine = null;
-	
-	public ChecksResource() throws MetadigStoreException {
-		boolean persist = false;
-		this.store = StoreFactory.getStore(persist);
+    
+    private Log log = LogFactory.getLog(this.getClass());
+    
+    private MDQStore store = null;
+    
+    private MDQEngine engine = null;
+    
+    public ChecksResource() throws MetadigStoreException {
+        boolean persist = false;
+        this.store = StoreFactory.getStore(persist);
 
-		try {
-			this.engine = new MDQEngine();
-			this.engine.setStore(this.store);
-		} catch (MetadigException | IOException | ConfigurationException e) {
-			log.error(e.getMessage(), e);
-		}
-	}
-	
+        try {
+            this.engine = new MDQEngine();
+            this.engine.setStore(this.store);
+        } catch (MetadigException | IOException | ConfigurationException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+    
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -78,7 +76,7 @@ public class ChecksResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listChecks() {
-    	Collection<String> checks = store.listChecks();
+        Collection<String> checks = store.listChecks();
         return JsonMarshaller.toJson(checks);
     }
     
@@ -86,45 +84,48 @@ public class ChecksResource {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     public String getCheck(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
-    	Check check = store.getCheck(id);
+        Check check = store.getCheck(id);
         return (String) XmlMarshaller.toXml(check, true);
     }
     
 //    @POST
 //    @Consumes(MediaType.MULTIPART_FORM_DATA)
+// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean createCheck(@FormDataParam("check") InputStream xml) {
-    	Check check = null;
-		try {
-			check = (Check) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Check.class);
-	    	store.createCheck(check);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return false;
-		} 
+        Check check = null;
+        try {
+            check = (Check) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Check.class);
+            store.createCheck(check);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        } 
         return true;
     }
     
 //    @PUT
 //    @Path("/{id}")
 //    @Consumes(MediaType.MULTIPART_FORM_DATA)
+// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean updateCheck(@PathParam("id") String id, @FormDataParam("check") InputStream xml) throws JAXBException, IOException {
-    	Check check = null;
-		try {
-			check = (Check) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Check.class);
-	    	store.updateCheck(check);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return false;
-		} 
+        Check check = null;
+        try {
+            check = (Check) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Check.class);
+            store.updateCheck(check);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return false;
+        } 
         return true;
     }
     
 //    @DELETE
 //    @Path("/{id}")
 //    @Produces(MediaType.TEXT_PLAIN)
+// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean updateCheck(@PathParam("id") String id) {
-    	Check check = store.getCheck(id);
-    	store.deleteCheck(check);
+        Check check = store.getCheck(id);
+        store.deleteCheck(check);
         return true;
     }
     
@@ -133,51 +134,49 @@ public class ChecksResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response run(
-    		@PathParam("id") String id,
-    		@FormDataParam("document") InputStream input,
-    		@FormDataParam("systemMetadata") InputStream sysMetaStream,
-    		@Context Request r) throws UnsupportedEncodingException, JAXBException {
-    	
-    	Run run = null;
-    	// include SM if it was provided
-    	SystemMetadata sysMeta = null;
-    	if (sysMetaStream != null) {
-    		try {
-				sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
-			} catch (InstantiationException | IllegalAccessException
-					| IOException | MarshallingException e) {
-				log.warn("Could not unmarshall SystemMetadata from stream", e);
-			}
-    	}
-		try {
-			Map<String, Object> params = new HashMap<String, Object>();
-//			params.putAll(formParams);
-//			params.remove("id");
-//			params.remove("document");
-			Check check = store.getCheck(id);
-			run = engine.runCheck(check, input, params, sysMeta);
-	    	store.createRun(run);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return Response.serverError().entity(e).build();
-		} 
-		
-		// determine the format of plot to return
+            @PathParam("id") String id,
+            @FormDataParam("document") InputStream input,
+            @FormDataParam("systemMetadata") InputStream sysMetaStream,
+            @Context Request r) throws UnsupportedEncodingException, JAXBException {
+        
+        Run run = null;
+        // include SM if it was provided
+        SystemMetadata sysMeta = null;
+        if (sysMetaStream != null) {
+            try {
+                sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
+            } catch (InstantiationException | IllegalAccessException
+                    | IOException | MarshallingException e) {
+                log.warn("Could not unmarshall SystemMetadata from stream", e);
+            }
+        }
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            Check check = store.getCheck(id);
+            run = engine.runCheck(check, input, params, sysMeta);
+            store.createRun(run);
+            Dispatcher.getDispatcher("python").close();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Response.serverError().entity(e).build();
+        } 
+        
+        // determine the format of plot to return
         String resultString = null;
-		List<Variant> vs = 
-			    Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
-		Variant v = r.selectVariant(vs);
-		if (v == null) {
-		    return Response.notAcceptable(vs).build();
-		} else {
-		    MediaType mt = v.getMediaType();
-		    if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
-		    	resultString = XmlMarshaller.toXml(run, true);
-		    } else {
-		    	resultString = JsonMarshaller.toJson(run);
-		    }
-		}
-		
-		return Response.ok(resultString).build();
+        List<Variant> vs = 
+                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+        Variant v = r.selectVariant(vs);
+        if (v == null) {
+            return Response.notAcceptable(vs).build();
+        } else {
+            MediaType mt = v.getMediaType();
+            if (mt.equals(MediaType.APPLICATION_XML_TYPE)) {
+                resultString = XmlMarshaller.toXml(run, true);
+            } else {
+                resultString = JsonMarshaller.toJson(run);
+            }
+        }
+        
+        return Response.ok(resultString).build();
     }
 }
