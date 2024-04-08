@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.exception.MetadigStoreException;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
+import edu.ucsb.nceas.mdqengine.store.DatabaseStore;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,71 +27,63 @@ import edu.ucsb.nceas.mdqengine.serialize.XmlMarshaller;
 @Path("runs")
 public class RunsResource {
 
-	private Log log = LogFactory.getLog(this.getClass());
+    private Log log = LogFactory.getLog(this.getClass());
 
-	public RunsResource() {
-    }
-	
+    public RunsResource() {}
+
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Method handling HTTP GET requests. The returned object will be sent to the client as
+     * "text/plain" media type.
      *
      * @return String that will be returned as a text/plain response.
      */
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
+    // @GET
+    // @Produces(MediaType.APPLICATION_JSON)
     public String listRuns() {
         // persist = true causes a database based store to be created by the factory.
-        boolean persist = true;
-        MDQStore store = null;
-        try {
-            store = StoreFactory.getStore(persist);
+        Collection<String> runs = null;
+        try (DatabaseStore store = new DatabaseStore()) {
+            runs = store.listRuns();
         } catch (MetadigException e) {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-            throw(ise);
+            throw (ise);
         }
-
-    	Collection<String> runs = store.listRuns();
-        store.shutdown();
         return JsonMarshaller.toJson(runs);
     }
-    
+
     @GET
     @Path("/{suite}/{id : .+}") // Allow for '/' in the metadataId
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId, @Context Request r) throws UnsupportedEncodingException, JAXBException {
-
-        boolean persist = true;
-        MDQStore store = null;
-        try {
-            store = StoreFactory.getStore(persist);
-        } catch (MetadigException e) {
-            InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-            throw(ise);
-        }
-        // Decode just the pid portion of the URL
-        try {
-            metadataId = java.net.URLDecoder.decode(metadataId, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            // not going to happen - value came from JDK's own StandardCharsets
-        }
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getRun(@PathParam("suite") String suiteId, @PathParam("id") String metadataId,
+            @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
         Run run = null;
-        log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
-        try {
-            run = store.getRun(metadataId, suiteId);
-        } catch (MetadigStoreException e) {
+        try (DatabaseStore store = new DatabaseStore()) {
+
+            // Decode just the pid portion of the URL
+            try {
+                metadataId = java.net.URLDecoder.decode(metadataId, StandardCharsets.UTF_8.name());
+            } catch (UnsupportedEncodingException e) {
+                // not going to happen - value came from JDK's own StandardCharsets
+            }
+
+            log.debug("Getting run for suiteId: " + suiteId + ", metadataId: " + metadataId);
+            try {
+                run = store.getRun(metadataId, suiteId);
+            } catch (MetadigStoreException e) {
+                InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
+                throw (ise);
+            }
+        } catch (MetadigException e) {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
-            throw(ise);
-        } finally {
-            store.shutdown();
+            throw (ise);
         }
 
-    	if(run != null) {
+        if (run != null) {
             log.debug("Retrieved run with pid: " + run.getId());
         } else {
             log.info("Run not retrieved for suiteId: " + suiteId + ", metadataId: " + metadataId);
-    	    if(run == null) {
+            if (run == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         }
@@ -98,7 +91,8 @@ public class RunsResource {
         // Get the HTML request 'Accept' header specified media type and return that type
         String resultString = null;
         List<Variant> vs =
-                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE)
+                        .build();
         Variant v = r.selectVariant(vs);
         if (v == null) {
             return Response.notAcceptable(vs).build();
