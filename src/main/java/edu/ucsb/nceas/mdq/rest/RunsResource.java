@@ -83,9 +83,7 @@ public class RunsResource {
             log.debug("Retrieved run with pid: " + run.getId());
         } else {
             log.info("Run not retrieved for suiteId: " + suiteId + ", metadataId: " + metadataId);
-            if (run == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         // Get the HTML request 'Accept' header specified media type and return that type
