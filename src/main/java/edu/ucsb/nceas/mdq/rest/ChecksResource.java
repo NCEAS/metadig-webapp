@@ -48,13 +48,13 @@ import edu.ucsb.nceas.mdqengine.dispatch.Dispatcher;
  */
 @Path("checks")
 public class ChecksResource {
-    
+
     private Log log = LogFactory.getLog(this.getClass());
-    
+
     private MDQStore store = null;
-    
+
     private MDQEngine engine = null;
-    
+
     public ChecksResource() throws MetadigStoreException {
         boolean persist = false;
         this.store = StoreFactory.getStore(persist);
@@ -66,10 +66,10 @@ public class ChecksResource {
             log.error(e.getMessage(), e);
         }
     }
-    
+
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Method handling HTTP GET requests. The returned object will be sent to the client as
+     * "text/plain" media type.
      *
      * @return String that will be returned as a text/plain response.
      */
@@ -79,18 +79,19 @@ public class ChecksResource {
         Collection<String> checks = store.listChecks();
         return JsonMarshaller.toJson(checks);
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    public String getCheck(@PathParam("id") String id) throws UnsupportedEncodingException, JAXBException {
+    public String getCheck(@PathParam("id") String id)
+            throws UnsupportedEncodingException, JAXBException {
         Check check = store.getCheck(id);
         return (String) XmlMarshaller.toXml(check, true);
     }
-    
-//    @POST
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
+
+    // @POST
+    // @Consumes(MediaType.MULTIPART_FORM_DATA)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean createCheck(@FormDataParam("check") InputStream xml) {
         Check check = null;
         try {
@@ -99,15 +100,16 @@ public class ChecksResource {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return false;
-        } 
+        }
         return true;
     }
-    
-//    @PUT
-//    @Path("/{id}")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
-    public boolean updateCheck(@PathParam("id") String id, @FormDataParam("check") InputStream xml) throws JAXBException, IOException {
+
+    // @PUT
+    // @Path("/{id}")
+    // @Consumes(MediaType.MULTIPART_FORM_DATA)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
+    public boolean updateCheck(@PathParam("id") String id, @FormDataParam("check") InputStream xml)
+            throws JAXBException, IOException {
         Check check = null;
         try {
             check = (Check) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Check.class);
@@ -115,38 +117,37 @@ public class ChecksResource {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return false;
-        } 
+        }
         return true;
     }
-    
-//    @DELETE
-//    @Path("/{id}")
-//    @Produces(MediaType.TEXT_PLAIN)
-// not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
+
+    // @DELETE
+    // @Path("/{id}")
+    // @Produces(MediaType.TEXT_PLAIN)
+    // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean updateCheck(@PathParam("id") String id) {
         Check check = store.getCheck(id);
         store.deleteCheck(check);
         return true;
     }
-    
+
     @POST
     @Path("/{id}/run")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response run(
-            @PathParam("id") String id,
-            @FormDataParam("document") InputStream input,
-            @FormDataParam("systemMetadata") InputStream sysMetaStream,
-            @Context Request r) throws UnsupportedEncodingException, JAXBException {
-        
+    public Response run(@PathParam("id") String id, @FormDataParam("document") InputStream input,
+            @FormDataParam("systemMetadata") InputStream sysMetaStream, @Context Request r)
+            throws UnsupportedEncodingException, JAXBException {
+
         Run run = null;
         // include SM if it was provided
         SystemMetadata sysMeta = null;
         if (sysMetaStream != null) {
             try {
-                sysMeta = TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
-            } catch (InstantiationException | IllegalAccessException
-                    | IOException | MarshallingException e) {
+                sysMeta =
+                        TypeMarshaller.unmarshalTypeFromStream(SystemMetadata.class, sysMetaStream);
+            } catch (InstantiationException | IllegalAccessException | IOException
+                    | MarshallingException e) {
                 log.warn("Could not unmarshall SystemMetadata from stream", e);
             }
         }
@@ -159,12 +160,13 @@ public class ChecksResource {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return Response.serverError().entity(e).build();
-        } 
-        
+        }
+
         // determine the format of plot to return
         String resultString = null;
-        List<Variant> vs = 
-                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE).build();
+        List<Variant> vs =
+                Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, MediaType.APPLICATION_XML_TYPE)
+                        .build();
         Variant v = r.selectVariant(vs);
         if (v == null) {
             return Response.notAcceptable(vs).build();
@@ -176,7 +178,7 @@ public class ChecksResource {
                 resultString = JsonMarshaller.toJson(run);
             }
         }
-        
+
         return Response.ok(resultString).build();
     }
 }
