@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBException;
 
 import edu.ucsb.nceas.mdqengine.exception.MetadigException;
 import edu.ucsb.nceas.mdqengine.store.StoreFactory;
+import edu.ucsb.nceas.mdqengine.store.DatabaseStore;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -66,7 +67,6 @@ public class SuitesResource {
         }
 
         Collection<String> suites = store.listSuites();
-        store.shutdown();
         return JsonMarshaller.toJson(suites);
     }
 
@@ -84,7 +84,6 @@ public class SuitesResource {
             throw (ise);
         }
         Suite suite = store.getSuite(id);
-        store.shutdown();
         return XmlMarshaller.toXml(suite, true);
     }
 
@@ -92,25 +91,19 @@ public class SuitesResource {
     // @Consumes(MediaType.MULTIPART_FORM_DATA)
     // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean createSuite(@FormDataParam("suite") InputStream xml) {
-        boolean persist = true;
-        MDQStore store = null;
-        MDQEngine engine = null;
-        try {
-            store = StoreFactory.getStore(persist);
-            engine = new MDQEngine();
-        } catch (MetadigException | IOException | ConfigurationException e) {
+
+        try (DatabaseStore store = new DatabaseStore()) {
+            Suite suite = null;
+            try {
+                suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
+                store.createSuite(suite);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return false;
+            }
+        } catch (MetadigException e) {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
             throw (ise);
-        }
-        Suite suite = null;
-        try {
-            suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
-            store.createSuite(suite);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return false;
-        } finally {
-            store.shutdown();
         }
         return true;
     }
@@ -121,25 +114,19 @@ public class SuitesResource {
     // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean updateSuite(@PathParam("id") String id, @FormDataParam("suite") InputStream xml)
             throws JAXBException, IOException {
-        boolean persist = true;
-        MDQStore store = null;
-        MDQEngine engine = null;
-        try {
-            store = StoreFactory.getStore(persist);
-            engine = new MDQEngine();
-        } catch (MetadigException | IOException | ConfigurationException e) {
+
+        try (DatabaseStore store = new DatabaseStore()) {
+            Suite suite = null;
+            try {
+                suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
+                store.updateSuite(suite);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return false;
+            }
+        } catch (MetadigException e) {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
             throw (ise);
-        }
-        Suite suite = null;
-        try {
-            suite = (Suite) XmlMarshaller.fromXml(IOUtils.toString(xml, "UTF-8"), Suite.class);
-            store.updateSuite(suite);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return false;
-        } finally {
-            store.shutdown();
         }
         return true;
     }
@@ -149,19 +136,14 @@ public class SuitesResource {
     // @Produces(MediaType.TEXT_PLAIN)
     // not enabled for security reasons, see: https://github.com/NCEAS/metadig-webapp/issues/21
     public boolean deleteSuite(@PathParam("id") String id) {
-        boolean persist = true;
-        MDQStore store = null;
-        MDQEngine engine = null;
-        try {
-            store = StoreFactory.getStore(persist);
-            engine = new MDQEngine();
-        } catch (MetadigException | IOException | ConfigurationException e) {
+
+        try (DatabaseStore store = new DatabaseStore()) {
+            Suite suite = store.getSuite(id);
+            store.deleteSuite(suite);
+        } catch (MetadigException e) {
             InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
             throw (ise);
         }
-        Suite suite = store.getSuite(id);
-        store.deleteSuite(suite);
-        store.shutdown();
         return true;
     }
 
@@ -179,8 +161,6 @@ public class SuitesResource {
                                                         // ("high", "medium", "low")
             @Context Request r) throws UnsupportedEncodingException, JAXBException {
 
-        boolean persist = true;
-        MDQStore store = null;
         MDQEngine engine = null;
 
         if (priority == null)
@@ -224,25 +204,24 @@ public class SuitesResource {
         // to the processing queue.
         if (priority.equals("high")) {
 
-            try {
-                store = StoreFactory.getStore(persist);
+            try (DatabaseStore store = new DatabaseStore()) {
                 engine = new MDQEngine();
+
+                try {
+                    log.info("Running suite " + id + " for pid "
+                            + sysMeta.getIdentifier().getValue());
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    Suite suite = store.getSuite(id);
+                    run = engine.runSuite(suite, input, params, sysMeta);
+                    store.createRun(run);
+                    Dispatcher.getDispatcher("python").close();
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                    return Response.serverError().entity(e).build();
+                }
             } catch (MetadigException | IOException | ConfigurationException e) {
                 InternalServerErrorException ise = new InternalServerErrorException(e.getMessage());
                 throw (ise);
-            }
-            try {
-                log.info("Running suite " + id + " for pid " + sysMeta.getIdentifier().getValue());
-                Map<String, Object> params = new HashMap<String, Object>();
-                Suite suite = store.getSuite(id);
-                run = engine.runSuite(suite, input, params, sysMeta);
-                store.createRun(run);
-                Dispatcher.getDispatcher("python").close();
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return Response.serverError().entity(e).build();
-            } finally {
-                store.shutdown();
             }
 
             // determine the format of plot to return
