@@ -1,13 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <properties>
         <jersey.version>2.35</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- <docker.registry>docker.io</docker.registry> -->
         <docker.repo>metadig</docker.repo>
-        <docker.tag>3.0.2</docker.tag>
-        <metadig-engine-version>3.0.2</metadig-engine-version>
+        <docker.tag>3.0.3-SNAPSHOT</docker.tag>
+        <metadig-engine-version>3.0.3-SNAPSHOT</metadig-engine-version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -15,7 +16,7 @@
     <groupId>edu.ucsb.nceas</groupId>
     <artifactId>metadig-webapp</artifactId>
     <packaging>war</packaging>
-    <version>3.0.1</version>
+    <version>3.0.3-SNAPSHOT</version>
     <name>metadig-webapp</name>
 
     <repositories>
@@ -56,7 +57,9 @@
                         </goals>
                         <configuration>
                             <target name="copy war file for Docker image build">
-                                <copy file="${project.build.directory}/metadig-webapp-${project.version}.war" tofile="${project.basedir}/Docker/metadig-controller/metadig-webapp.war" />
+                                <copy
+                                    file="${project.build.directory}/metadig-webapp-${project.version}.war"
+                                    tofile="${project.basedir}/Docker/metadig-controller/metadig-webapp.war" />
                             </target>
                         </configuration>
                     </execution>
@@ -101,9 +104,9 @@
             <artifactId>jersey-container-servlet-core</artifactId>
         </dependency>
         <dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-multipart</artifactId>
-		</dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -122,7 +125,7 @@
             <artifactId>jersey-hk2</artifactId>
             <version>${jersey.version}</version>
         </dependency>
-        
+
     </dependencies>
 
 </project>
