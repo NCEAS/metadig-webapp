@@ -18,14 +18,12 @@
     <packaging>war</packaging>
     <version>3.0.3-SNAPSHOT</version>
     <name>metadig-webapp</name>
-
     <repositories>
         <repository>
             <id>DataONE</id>
             <url>https://maven.dataone.org</url>
         </repository>
     </repositories>
-
     <build>
         <plugins>
             <plugin>
