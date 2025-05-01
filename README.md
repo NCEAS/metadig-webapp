@@ -33,29 +33,3 @@ In order to build metadig-webapp:
 The metadig-webapp Docker images are built automatically with GitHub actions.
 
 These images are pushed to the `metadig` Docker Hub, for example: https://hub.docker.com/repository/docker/metadig/metadig-controller.
-
-Authorization for Docker Hub can be setup in several ways. One method is to create or append to the local file ~/.m2/settings, which allows the Maven build to set the necessary credentials to DockerHub during the push. An example of this file is:
-
-```
-<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
-  <localRepository/>
-  <interactiveMode/>
-  <offline/>
-  <pluginGroups/>
-  <servers>
-    <server>
-      <id>docker.io</id>
-      <username>[place username here]</username>
-      <password>[place password here]</password>
-    </server>
-  </servers>
-  <mirrors/>
-  <proxies/>
-  <profiles/>
-  <activeProfiles/>
-</settings>
-```
-
-The appropriate username and password is available from the NCEAS secure repo.
