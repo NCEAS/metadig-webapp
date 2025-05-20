@@ -1,5 +1,5 @@
 # MetaDIG webapp
-Web service for interacting with the [MetaDIG Engine](https://github.com/NCEAS/metadig-engine) API.
+Web service for interacting with the [MetaDIG Engine](https://github.com/NCEAS/metadig-engine) API.  
 
 This project builds a 'metadig-webapp.war' file that can be deployed in the Tomcat webapps directory. Depending on the Tomcat configuration, the war may be unpacked automatically each time a new version is copied in place.
 
