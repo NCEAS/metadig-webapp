@@ -9,6 +9,9 @@ LABEL maintainer="Jeanette Clark jclark@nceas.ucsb.edu"
 ARG ENGINE_TAG=2.0.0
 ENV ENGINE_TAG=${ENGINE_TAG}
 
+RUN groupadd -g 59990 metadig
+RUN useradd -u 59990 -g 59990 metadig
+
 # metadig-webapp can process a quality report generation request directly, or queue it for
 # a metadig-worker (container) to process. If it has been requested that a quality report
 # be created immediately, some minimal R and DataOne indexing needs to be configured.
@@ -21,6 +24,10 @@ COPY Docker/metadig-controller/server.xml /usr/local/tomcat/conf/server.xml
 # it can be copyied to the image. The final war file is named 'quality.war' so that the tomcat
 # context will be 'quality', i.e. 'https://docker-ucsb-1.test.dataone.org:30080/quality'.
 COPY target/metadig-webapp-$ENGINE_TAG.war /usr/local/tomcat/webapps/quality.war
+
+RUN chown -R metadig:metadig /usr/local/tomcat /etc/dataone
+
+USER 59990
 
 # metadig-controller will send requests to tomcat port 8080
 EXPOSE 8080
